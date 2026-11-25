@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craft Lab · 로지텍 크래프트 키보드 연습실</title>
+<meta name="description" content="Logitech Craft 키보드의 크라운(Crown), Easy-Switch, 스마트 F키, Options+ 설정을 직접 따라 하며 익히는 인터랙티브 연습 사이트">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#0e1014;--panel:#161920;--panel2:#1d2129;--line:#2a303b;--text:#e9ecf2;--muted:#98a2b3;
+  --acc:#4fd1c5;--acc2:#f6ad55;--red:#f56565;--green:#48bb78;--blue:#63b3ed;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Pretendard,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;line-height:1.55}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--acc)}
+.top{position:sticky;top:0;z-index:50;background:rgba(14,16,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topin{max-width:1320px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand .dial{width:30px;height:30px;border-radius:50%;background:repeating-conic-gradient(#c9ced6 0 4deg,#8c939e 4deg 8deg);box-shadow:inset 0 0 0 5px #b9bfc8,0 0 0 2px #2c313a}
+.brand b{font-size:18px;letter-spacing:.3px}
+.brand small{display:block;color:var(--muted);font-size:12px;margin-top:-2px}
+.tabs{display:flex;gap:2px;flex-wrap:nowrap;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{background:transparent;border:1px solid transparent;color:var(--muted);padding:7px 10px;border-radius:999px;font-size:14px;white-space:nowrap;flex:none}
+.tabs button:hover{color:var(--text);background:var(--panel2)}
+.tabs button.on{color:#0e1014;background:var(--acc);font-weight:700}
+.tright{display:flex;align-items:center;gap:10px}
+.prog{width:110px;height:8px;background:var(--panel2);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .4s}
+#progTxt{font-size:12px;color:var(--muted);white-space:nowrap}
+.langs{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.langs button{background:transparent;color:var(--muted);border:0;padding:6px 10px;font-size:13px}
+.langs button.on{background:var(--panel2);color:var(--text);font-weight:700}
+main{max-width:1240px;margin:0 auto;padding:22px 16px 80px}
+.sec{display:none;animation:fade .35s}
+.sec.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-size:clamp(26px,3.4vw,40px);margin:6px 0 8px;line-height:1.15}
+h2{font-size:24px;margin:0 0 6px}
+h3{font-size:17px;margin:0 0 8px}
+.lead{color:var(--muted);font-size:16px;max-width:820px;margin:0 0 18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.pill{display:inline-block;font-size:12px;padding:3px 9px;border-radius:99px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.btn{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:8px 13px;border-radius:10px;font-size:14px}
+.btn:hover{border-color:var(--acc)}
+.btn.pri{background:var(--acc);color:#0b0d10;border-color:var(--acc);font-weight:700}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn.on{border-color:var(--acc);color:var(--acc)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin-top:8px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:center;margin-bottom:22px}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+.heroArt{display:flex;justify-content:center}
+.heroDial{width:min(260px,70vw);aspect-ratio:1;border-radius:50%;position:relative;background:radial-gradient(circle at 35% 30%,#3a3f48,#15181d 70%);box-shadow:0 30px 60px rgba(0,0,0,.5),inset 0 0 0 10px #22262d}
+.heroDial .k{position:absolute;inset:12%;border-radius:50%;background:repeating-conic-gradient(#d4d8de 0 3deg,#7d848f 3deg 6deg);animation:spin 18s linear infinite}
+.heroDial .c{position:absolute;inset:22%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#eef1f4,#9aa1ab 70%);box-shadow:inset 0 2px 8px rgba(255,255,255,.6),0 4px 14px rgba(0,0,0,.4)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.facts{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.part{cursor:pointer;transition:.2s}
+.part:hover{border-color:var(--acc);transform:translateY(-2px)}
+.part .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--acc);color:#0b0d10;font-weight:800;margin-right:8px;font-size:13px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.steps li{counter-increment:s;padding:10px 12px 10px 46px;position:relative;background:var(--panel2);border-radius:10px}
+.steps li::before{content:counter(s);position:absolute;left:12px;top:9px;width:24px;height:24px;border-radius:50%;background:var(--acc2);color:#111;display:grid;place-items:center;font-weight:800;font-size:13px}
+
+/* ===== keyboard ===== */
+.kbHost{width:100%;overflow:hidden}
+.kb{--u:36px;--bl:0;position:relative;margin:0 auto;border-radius:calc(var(--u)*.45);padding:calc(var(--u)*.35);
+  width:calc(var(--u)*23 + var(--u)*.7);height:calc(var(--u)*8.4 + var(--u)*.7);
+  background:linear-gradient(180deg,#3a3e45,#24272c 30%,#1e2125);box-shadow:0 18px 40px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.12);user-select:none;-webkit-user-select:none;touch-action:none}
+.kb.off{filter:saturate(.3) brightness(.75)}
+.kbTop{position:absolute;left:calc(var(--u)*.35);right:calc(var(--u)*.35);top:calc(var(--u)*.35);height:calc(var(--u)*1.7)}
+.kbTop .brandTxt{position:absolute;right:calc(var(--u)*.3);top:calc(var(--u)*.55);font-size:calc(var(--u)*.32);letter-spacing:.25em;color:#8a919c;font-weight:600}
+.kbTop .led{position:absolute;width:calc(var(--u)*.16);height:calc(var(--u)*.16);border-radius:50%;background:#3b3f46}
+.kbTop .ledLbl{position:absolute;font-size:calc(var(--u)*.22);color:#7c838e}
+.led.red{background:var(--red)!important;box-shadow:0 0 8px var(--red)}
+.led.white{background:#f4f7fb!important;box-shadow:0 0 8px #fff}
+.prox{position:absolute;left:calc(var(--u)*5.2);top:calc(var(--u)*.62);font-size:calc(var(--u)*.24);color:#7c838e;display:flex;align-items:center;gap:6px}
+.prox i{width:calc(var(--u)*.18);height:calc(var(--u)*.18);border-radius:50%;background:#444a53}
+.prox.on i{background:var(--acc);box-shadow:0 0 8px var(--acc)}
+.crown{position:absolute;border-radius:50%;cursor:grab;touch-action:none;outline:none}
+.crown .knurl{position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(#d9dde2 0 4deg,#7a818c 4deg 8deg);box-shadow:0 4px 10px rgba(0,0,0,.6)}
+.crown .cap{position:absolute;inset:16%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#f1f3f6,#9aa1ab 72%);box-shadow:inset 0 2px 6px rgba(255,255,255,.7),0 2px 6px rgba(0,0,0,.45);transition:box-shadow .2s}
+.crown.touch .cap{box-shadow:inset 0 2px 6px rgba(255,255,255,.7),0 0 0 3px var(--acc),0 0 18px var(--acc)}
+.crown:focus-visible{box-shadow:0 0 0 3px var(--acc2)}
+.crown.small{left:calc(var(--u)*.1);top:calc(var(--u)*.05);width:calc(var(--u)*1.55);height:calc(var(--u)*1.55)}
+.keys{position:absolute;left:calc(var(--u)*.35);top:calc(var(--u)*2.25);width:calc(var(--u)*23);height:calc(var(--u)*6.5)}
+.key{position:absolute;left:calc(var(--x)*var(--u));top:calc(var(--y)*var(--u));width:calc(var(--w)*var(--u) - 4px);height:calc(var(--h)*var(--u) - 4px);
+  border-radius:calc(var(--u)*.16);background:radial-gradient(ellipse at 50% 45%,#2a2d33,#1a1c20 75%);border:1px solid #121316;
+  box-shadow:0 2px 0 #0c0d0f,inset 0 1px 0 rgba(255,255,255,.05);display:flex;flex-direction:column;justify-content:center;align-items:center;
+  color:rgba(235,240,248,calc(.32 + var(--bl)*.68));text-shadow:0 0 calc(var(--bl)*7px) rgba(255,255,255,calc(var(--bl)*.85));
+  font-size:calc(var(--u)*.27);line-height:1.05;cursor:pointer;transition:transform .06s,background .2s;overflow:hidden;text-align:center;padding:1px}
+.key .s{font-size:calc(var(--u)*.2);opacity:.75}
+.key .m{font-weight:600}
+.key .ic{font-size:calc(var(--u)*.3)}
+.key .fl{font-size:calc(var(--u)*.19);opacity:.7}
+.key.std .m{font-size:calc(var(--u)*.3)}
+.key.down,.key.pressed{transform:translateY(2px);box-shadow:0 0 0 #000;background:#33373e}
+.key.hl{outline:2px solid var(--acc2);outline-offset:1px;animation:pulse 1s 3}
+@keyframes pulse{50%{outline-color:transparent}}
+.key.tested{background:radial-gradient(ellipse at 50% 45%,#1f4a46,#173633 75%)}
+.key.live{background:var(--acc)!important;color:#0b0d10!important;text-shadow:none}
+.key.latched{box-shadow:0 0 0 2px var(--acc) inset}
+.key .kled{position:absolute;top:calc(var(--u)*.08);right:calc(var(--u)*.1);width:calc(var(--u)*.11);height:calc(var(--u)*.11);border-radius:50%;background:#3b3f46}
+.kled.on{background:#f4f7fb;box-shadow:0 0 6px #fff}
+.kled.blinkFast{animation:blk .35s infinite}
+.kled.blinkSlow{animation:blk 1.1s infinite}
+@keyframes blk{0%,49%{background:#f4f7fb;box-shadow:0 0 6px #fff}50%,100%{background:#3b3f46;box-shadow:none}}
+.key.holding::after{content:"";position:absolute;left:0;bottom:0;height:3px;background:var(--acc2);animation:hold 3s linear forwards}
+@keyframes hold{from{width:0}to{width:100%}}
+.kbBack{display:flex;gap:16px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.sw{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);padding:6px 10px;border-radius:10px;font-size:13px}
+.toggle{width:40px;height:22px;border-radius:99px;background:#3a404b;position:relative;border:0;padding:0;transition:.2s;flex:none}
+.toggle::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s}
+.toggle.on{background:var(--acc)}
+.toggle.on::after{left:21px}
+
+/* ===== PC mock ===== */
+.pc{border-radius:12px;background:#0a0b0d;padding:8px;border:1px solid var(--line)}
+.scr{position:relative;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#1b2635}
+.wall{position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,#3b6ea8,transparent 55%),radial-gradient(circle at 80% 70%,#7b4fa8,transparent 55%),linear-gradient(135deg,#1c2b44,#2b1d3d)}
+.deskLbl{position:absolute;left:10px;top:8px;font-size:11px;color:#cfd8e6;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:99px}
+.wins{position:absolute;inset:12% 6% 18% 6%;transition:transform .3s}
+.win{position:absolute;width:52%;height:62%;background:#f4f6f9;border-radius:6px;box-shadow:0 8px 20px rgba(0,0,0,.45);color:#222;font-size:11px;overflow:hidden;transition:all .35s}
+.win b{display:block;background:#dfe4eb;padding:3px 8px;font-size:10.5px}
+.win i{display:block;padding:6px 8px;font-style:normal;color:#444;word-break:break-all;white-space:pre-wrap;font-size:11px;line-height:1.35}
+.win[data-w="0"]{left:0;top:0}.win[data-w="1"]{left:24%;top:16%;background:#2b2b2b;color:#ddd}.win[data-w="1"] b{background:#1e1e1e;color:#9cc8ff}
+.win[data-w="2"]{left:48%;top:32%;background:#121212;color:#ddd}.win[data-w="2"] b{background:#000;color:#1ed760}
+.win.act{z-index:3;outline:2px solid var(--acc)}
+.wins.hide .win{transform:translateY(140%) scale(.4);opacity:0}
+.wins.expose .win{width:31%;height:46%;top:22%!important}
+.wins.expose .win[data-w="0"]{left:0}.wins.expose .win[data-w="1"]{left:34.5%}.wins.expose .win[data-w="2"]{left:69%}
+.typed{position:absolute;left:8%;right:8%;bottom:20%;min-height:20px;background:rgba(0,0,0,.55);color:#fff;font-family:ui-monospace,Consolas,monospace;font-size:12px;padding:4px 8px;border-radius:6px;display:none;white-space:pre-wrap;word-break:break-all}
+.typed.show{display:block}
+.bar{position:absolute;left:0;right:0;bottom:0;height:14%;background:rgba(10,12,16,.85);display:flex;align-items:center;gap:10px;padding:0 10px;font-size:11px;color:#dfe6f0}
+.bar .sp{flex:1}
+.hud{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%) scale(.9);background:rgba(20,22,27,.88);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;color:#fff;opacity:0;transition:.2s;pointer-events:none;min-width:58%;font-size:12px;z-index:6}
+.hud.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.hud .hb{flex:1;height:6px;background:#3c424c;border-radius:9px;overflow:hidden}
+.hud .hb i{display:block;height:100%;background:var(--acc);width:0}
+.layer{position:absolute;inset:0;z-index:5;display:none;align-items:center;justify-content:center;font-size:12px;color:#fff}
+.layer.show{display:flex}
+.dim{position:absolute;inset:0;background:#000;pointer-events:none;z-index:8;transition:opacity .25s}
+.ly-panel{background:rgba(25,28,34,.95);border-radius:10px;padding:10px 12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.ly-right{position:absolute;right:8px;top:8px;bottom:18%;width:38%}
+.ring{width:46%;aspect-ratio:1;border-radius:50%;position:relative;background:rgba(25,28,34,.9);box-shadow:0 0 0 2px var(--acc)}
+.ring span{position:absolute;font-size:17px;transform:translate(-50%,-50%)}
+.calc{display:grid;grid-template-columns:repeat(4,22px);gap:3px}
+.calc .d{grid-column:1/5;background:#000;text-align:right;padding:3px 6px;border-radius:4px;font-size:14px}
+.calc span{background:#3a404b;text-align:center;border-radius:3px;font-size:10px;padding:2px 0}
+.lockScr{position:absolute;inset:0;background:linear-gradient(135deg,#1a2a44,#3b1d4d);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
+.lockScr .clk{font-size:30px;font-weight:300}
+.flash{position:absolute;inset:0;background:#fff;animation:flash .6s forwards}
+@keyframes flash{to{opacity:0}}
+
+/* ===== crown lab ===== */
+.lab{display:grid;grid-template-columns:360px 1fr;gap:16px}
+@media(max-width:960px){.lab{grid-template-columns:1fr}}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{display:flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:6px 10px;border-radius:10px;font-size:13px}
+.chip .ai{width:22px;height:22px;border-radius:5px;display:grid;place-items:center;font-size:10.5px;font-weight:800;color:#0b0d10}
+.chip.on{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
+.crownStage{position:relative;display:flex;flex-direction:column;align-items:center;padding:16px 0 6px}
+.crown.big{position:relative;width:200px;height:200px}
+.crown.big .knurl{box-shadow:0 14px 30px rgba(0,0,0,.6),0 0 0 8px #23272e,0 0 0 9px #353a43}
+.ovl{width:100%;min-height:118px;background:rgba(15,17,21,.9);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:16px;transition:opacity .25s,transform .25s;opacity:0;transform:translateY(6px)}
+.ovl.show{opacity:1;transform:none}
+.ovl .oh{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
+.ovl .it{display:flex;justify-content:space-between;align-items:center;padding:6px 9px;border-radius:8px;font-size:14px;margin:2px 0}
+.ovl .it.on{background:var(--acc);color:#0b0d10;font-weight:700}
+.ovl .it b{font-variant-numeric:tabular-nums}
+.ctl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;width:100%}
+.ctl .btn{width:100%}
+.howto{font-size:13px;color:var(--muted);background:var(--panel2);border-radius:10px;padding:9px 12px;margin-top:12px;width:100%}
+.howto b{color:var(--text)}
+.pv{position:relative}
+.pvApp{background:#0a0b0d;border-radius:12px;border:1px solid var(--line);padding:8px}
+.appwin{aspect-ratio:16/9;border-radius:6px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.appbar{display:flex;align-items:center;gap:8px;padding:5px 10px;font-size:12px;color:#ddd;background:#1e1e1e}
+.appbar .ai{width:18px;height:18px;border-radius:4px;display:grid;place-items:center;font-size:9px;font-weight:800;color:#000}
+.appbody{flex:1;position:relative;overflow:hidden}
+.readout{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.readout .pill.on{border-color:var(--acc);color:var(--acc)}
+.checker{background:conic-gradient(#d8d8d8 25%,#fff 0 50%,#d8d8d8 0 75%,#fff 0) 0 0/22px 22px}
+
+/* ===== options ===== */
+.opt{background:#f4f6f9;color:#1d232c;border-radius:16px;overflow:hidden}
+.optHead{background:#fff;border-bottom:1px solid #e3e7ee;padding:12px 16px;display:flex;align-items:center;gap:10px;font-weight:700}
+.optHead .lg{width:26px;height:26px;border-radius:7px;background:#1d232c;color:#fff;display:grid;place-items:center;font-size:12px}
+.optBody{padding:16px;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.ocard{background:#fff;border:1px solid #e3e7ee;border-radius:12px;padding:14px}
+.ocard h3{color:#1d232c}
+.ocard label{display:block;font-size:13px;color:#4a5566;margin:10px 0 4px;font-weight:600}
+.ocard select,.ocard input[type=text]{width:100%;padding:8px 10px;border-radius:8px;border:1px solid #cfd6e0;font-family:inherit;font-size:14px;background:#fff;color:#1d232c}
+.fgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.fbtn{background:#eef1f5;border:1px solid #d5dbe4;border-radius:8px;padding:6px 2px;font-size:11px;color:#1d232c;text-align:center}
+.fbtn .ic{display:block;font-size:16px}
+.fbtn.sel{border-color:#00a3a3;box-shadow:0 0 0 2px #00a3a3 inset;background:#e3f7f6}
+.picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;margin-top:10px}
+.picker button{background:#fff;border:1px solid #d5dbe4;border-radius:8px;padding:7px;font-size:12.5px;text-align:left;color:#1d232c}
+.picker button.cur{border-color:#00a3a3;background:#e3f7f6;font-weight:700}
+.ochk{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-top:12px}
+.otab{width:100%;border-collapse:collapse;font-size:13px}
+.otab td,.otab th{border-bottom:1px solid #e9edf2;padding:7px 4px;text-align:left}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:#c3cad4}
+.dot.ok{background:#18a058}.dot.blink{background:#e6a23c}
+
+/* ===== real ===== */
+.subtabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.log{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:#0a0b0d;border-radius:10px;padding:10px;min-height:120px;color:#cfe;max-height:180px;overflow:auto}
+.drillKey{font-size:clamp(28px,5vw,46px);font-weight:800;letter-spacing:.02em;margin:10px 0}
+.kcap{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-bottom-width:4px;border-radius:9px;padding:4px 14px;margin:0 3px}
+.drillOk{color:var(--green)}.drillNo{color:var(--red)}
+.tgt{font-size:20px;line-height:1.8;background:var(--panel2);border-radius:10px;padding:12px 14px;letter-spacing:.02em}
+.tgt .ok{color:var(--green)}.tgt .no{color:var(--red);text-decoration:underline}.tgt .cur{background:rgba(79,209,197,.25);border-radius:3px}
+textarea{width:100%;min-height:80px;margin-top:10px;background:#0a0b0d;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:18px;font-family:inherit}
+.stat{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.stat div{background:var(--panel2);border-radius:10px;padding:8px 14px;font-size:13px;color:var(--muted)}
+.stat b{display:block;font-size:20px;color:var(--text)}
+
+/* ===== missions/quiz/help ===== */
+.mcard{display:flex;gap:12px;align-items:flex-start}
+.mcard .mi{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--panel2);border:1px solid var(--line);font-size:13px}
+.mcard.done .mi{background:var(--green);border-color:var(--green);color:#0b0d10}
+.mcard.done{border-color:rgba(72,187,120,.5)}
+.mcard p{margin:2px 0 8px;font-size:13.5px;color:var(--muted)}
+.qitem{margin-bottom:12px}
+.qopts{display:grid;gap:6px;margin-top:8px}
+.qopts button{text-align:left;background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:9px 12px;border-radius:10px;font-size:14px}
+.qopts button.right{border-color:var(--green);background:rgba(72,187,120,.15)}
+.qopts button.wrong{border-color:var(--red);background:rgba(245,101,101,.12)}
+.qexp{font-size:13px;color:var(--muted);margin-top:8px;display:none}
+.qexp.show{display:block}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+summary{cursor:pointer;font-weight:700}
+details p,details ul{color:var(--muted);font-size:14px;margin:8px 0 0}
+.prompt{background:var(--panel2);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px;display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#232833;border:1px solid var(--line);color:var(--text);padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:100;pointer-events:none;max-width:90vw;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#toast.show{opacity:1;transform:translateX(-50%)}
+#toast.good{border-color:var(--green)}
+.pairBox{margin-top:12px;display:none}
+.pairBox.show{display:block}
+.conf{position:fixed;top:-20px;font-size:22px;z-index:200;animation:fall 2.4s linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.slider{display:flex;align-items:center;gap:8px;font-size:13px}
+.slider input{accent-color:var(--acc)}
+@media(max-width:900px){.topin{flex-wrap:wrap}.tabs{order:3;flex:1 1 100%}.tright{margin-left:auto}}
+@media(max-width:600px){.prog{width:70px}.brand small{display:none}}
+footer{max-width:1240px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <div class="brand"><span class="dial"></span><div><b>Craft Lab</b><small data-i18n="brandSub"></small></div></div>
+  <nav class="tabs" id="tabs"></nav>
+  <div class="tright">
+    <div class="prog"><i id="progBar"></i></div><span id="progTxt"></span>
+    <div class="langs"><button data-lang="ko">한국어</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
+  </div>
+</div></header>
+
+<main>
+<!-- HOME -->
+<section class="sec" id="sec-home">
+  <div class="hero">
+    <div>
+      <span class="pill" data-i18n="heroPill"></span>
+      <h1 data-i18n="heroTitle"></h1>
+      <p class="lead" data-i18n="heroLead"></p>
+      <div class="facts" id="facts"></div>
+      <div class="row"><button class="btn pri" data-go="crown" data-i18n="startCrown"></button><button class="btn" data-go="keys" data-i18n="startKeys"></button><button class="btn" data-go="missions" data-i18n="startMissions"></button></div>
+    </div>
+    <div class="heroArt"><div class="heroDial"><div class="k"></div><div class="c"></div></div></div>
+  </div>
+  <h2 data-i18n="partsTitle"></h2>
+  <p class="muted" data-i18n="partsLead"></p>
+  <div class="grid g4" id="parts" style="margin-top:12px"></div>
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card"><h3 data-i18n="orderTitle"></h3><ol class="steps" id="order"></ol></div>
+    <div class="card"><h3 data-i18n="setupTitle"></h3><ol class="steps" id="setup"></ol><p class="note" data-i18n="setupNote"></p></div>
+  </div>
+</section>
+
+<!-- CROWN -->
+<section class="sec" id="sec-crown">
+  <h2 data-i18n="crownTitle"></h2>
+  <p class="lead" data-i18n="crownLead"></p>
+  <div class="chips" id="appChips"></div>
+  <div class="lab">
+    <div class="card">
+      <div class="crownStage">
+        <div class="ovl" id="ovl"></div>
+        <div class="crown big" id="bigCrown" data-ctx="app" tabindex="0" aria-label="Crown"><div class="knurl"></div><div class="cap"></div></div>
+        <div class="ctl">
+          <button class="btn" id="cLeft">↺ <span data-i18n="turnLeft"></span></button>
+          <button class="btn" id="cRight"><span data-i18n="turnRight"></span> ↻</button>
+          <button class="btn" id="cTap" data-i18n="tapBtn"></button>
+          <button class="btn" id="cHold" data-i18n="holdBtn"></button>
+        </div>
+        <div class="howto" data-i18n-html="crownHow"></div>
+        <div style="width:100%;margin-top:12px;display:grid;gap:8px">
+          <div class="sw" style="justify-content:space-between"><span data-i18n="modeLbl"></span><span class="row" style="gap:6px"><button class="btn sm" id="mRatchet" data-i18n="ratchet"></button><button class="btn sm" id="mFriction" data-i18n="friction"></button></span></div>
+          <div class="sw" style="justify-content:space-between"><span data-i18n="optInst"></span><button class="toggle" id="tOpt"></button></div>
+          <div class="sw" style="justify-content:space-between"><span data-i18n="soundLbl"></span><button class="toggle" id="tSound"></button></div>
+        </div>
+      </div>
+    </div>
+    <div class="card pv">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px"><h3 id="pvTitle" style="margin:0"></h3><span class="pill" id="pvMode"></span></div>
+      <div id="pvPC"></div>
+      <div id="pvApp" class="pvApp"></div>
+      <div class="readout" id="readout"></div>
+      <p class="note" data-i18n="appNote"></p>
+    </div>
+  </div>
+</section>
+
+<!-- KEYS -->
+<section class="sec" id="sec-keys">
+  <h2 data-i18n="keysTitle"></h2>
+  <p class="lead" data-i18n="keysLead"></p>
+  <div class="card" style="padding:14px 10px">
+    <div class="kbHost" id="kbSim"></div>
+    <div class="kbBack">
+      <div class="sw"><span data-i18n="powerLbl"></span><button class="toggle on" id="tPower"></button></div>
+      <div class="sw"><span data-i18n="usbLbl"></span><button class="toggle" id="tUsb"></button></div>
+      <div class="sw slider"><span data-i18n="battLbl"></span><input type="range" min="0" max="100" id="rBatt"><b id="battVal"></b></div>
+      <div class="sw slider"><span data-i18n="ambLbl"></span><input type="range" min="0" max="100" id="rAmb"><b id="ambVal"></b></div>
+      <div class="sw"><span data-i18n="autoBl"></span><button class="toggle on" id="tAutoBl"></button></div>
+      <div class="sw"><span data-i18n="osLbl"></span><b id="osVal"></b></div>
+    </div>
+    <p class="note" data-i18n="kbNote"></p>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3 data-i18n="screenTitle"></h3><div id="pvPC2"></div></div>
+    <div class="card">
+      <h3 data-i18n="esTitle"></h3>
+      <div id="chanList"></div>
+      <div class="pairBox" id="pairBox"><p style="margin:0 0 8px" id="pairMsg"></p><div class="row" id="pairDevs"></div></div>
+      <h3 style="margin-top:16px" data-i18n="fnTitle"></h3>
+      <div id="fnList" class="muted" style="font-size:14px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPTIONS -->
+<section class="sec" id="sec-options">
+  <h2 data-i18n="optTitle"></h2>
+  <p class="lead" data-i18n="optLead"></p>
+  <div class="opt">
+    <div class="optHead"><span class="lg">logi</span><span>Logi Options+ · Craft</span><span class="pill" style="margin-left:auto" data-i18n="simPill"></span></div>
+    <div class="optBody">
+      <div class="ocard">
+        <h3 data-i18n="optCrown"></h3>
+        <label data-i18n="lblPress"></label><select id="selPress"></select>
+        <div id="ksWrap"><label data-i18n="lblKs"></label><input type="text" id="inKs" value="Ctrl + Z"></div>
+        <label data-i18n="lblTurn"></label><select id="selTurn"></select>
+        <label data-i18n="lblPT"></label><select id="selPT"></select>
+        <p class="note" style="color:#5b6676" data-i18n="optCrownNote"></p>
+        <button class="btn pri sm" data-go="crown" data-app="desktop" data-i18n="tryCrown"></button>
+      </div>
+      <div class="ocard">
+        <h3 data-i18n="optF"></h3>
+        <div class="fgrid" id="fgrid"></div>
+        <div id="fpick"></div>
+        <div class="ochk"><button class="toggle" id="tFstd"></button><span data-i18n="fStdLbl"></span></div>
+        <p class="note" style="color:#5b6676" data-i18n="optFNote"></p>
+      </div>
+      <div class="ocard">
+        <h3 data-i18n="optES"></h3>
+        <table class="otab" id="esTable"></table>
+        <p class="note" style="color:#5b6676" data-i18n="optESNote"></p>
+        <h3 style="margin-top:14px" data-i18n="optApps"></h3>
+        <div id="appList" style="font-size:13.5px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL -->
+<section class="sec" id="sec-real">
+  <h2 data-i18n="realTitle"></h2>
+  <p class="lead" data-i18n="realLead"></p>
+  <div class="subtabs" id="subtabs"></div>
+  <div id="sub-test" class="sub">
+    <div class="card" style="padding:14px 10px"><div class="kbHost" id="kbTest"></div>
+      <div class="row" style="margin-top:12px;justify-content:space-between;padding:0 6px"><span id="testCount" class="pill"></span><button class="btn sm" id="testReset" data-i18n="reset"></button></div>
+      <p class="note" style="padding:0 6px" data-i18n="testNote"></p>
+    </div>
+    <div class="card" style="margin-top:12px"><h3 data-i18n="logTitle"></h3><div class="log" id="keyLog"></div></div>
+  </div>
+  <div id="sub-drill" class="sub">
+    <div class="card" style="text-align:center">
+      <div class="row" style="justify-content:center"><span class="pill" id="drillOs"></span><button class="btn sm" id="drillOsBtn" data-i18n="switchOs"></button></div>
+      <p class="muted" id="drillDesc" style="margin:14px 0 0;font-size:18px"></p>
+      <div class="drillKey" id="drillKey"></div>
+      <p id="drillFb" style="min-height:24px"></p>
+      <div class="stat" style="justify-content:center"><div><span data-i18n="score"></span><b id="drillScore">0</b></div><div><span data-i18n="tries"></span><b id="drillTries">0</b></div></div>
+      <button class="btn sm" id="drillSkip" style="margin-top:10px" data-i18n="skip"></button>
+      <p class="note" data-i18n="drillNote"></p>
+    </div>
+  </div>
+  <div id="sub-type" class="sub">
+    <div class="card">
+      <div class="tgt" id="typeTgt"></div>
+      <textarea id="typeIn" spellcheck="false" data-i18n-ph="typePh"></textarea>
+      <div class="stat"><div><span data-i18n="speed"></span><b id="tSpeed">0</b></div><div><span data-i18n="acc"></span><b id="tAcc">100%</b></div><div><span data-i18n="doneN"></span><b id="tDone">0</b></div></div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="typeNext" data-i18n="nextSent"></button></div>
+      <p class="note" data-i18n="typeNote"></p>
+    </div>
+  </div>
+</section>
+
+<!-- MISSIONS -->
+<section class="sec" id="sec-missions">
+  <div class="row" style="justify-content:space-between"><div><h2 data-i18n="misTitle"></h2><p class="lead" data-i18n="misLead"></p></div><button class="btn sm" id="misReset" data-i18n="resetAll"></button></div>
+  <div class="grid g3" id="misGrid"></div>
+</section>
+
+<!-- QUIZ -->
+<section class="sec" id="sec-quiz">
+  <h2 data-i18n="quizTitle"></h2>
+  <p class="lead" data-i18n="quizLead"></p>
+  <div id="quizBox"></div>
+  <div class="card row" style="justify-content:space-between"><b id="quizScore"></b><button class="btn" id="quizRetry" data-i18n="retry"></button></div>
+</section>
+
+<!-- HELP -->
+<section class="sec" id="sec-help">
+  <h2 data-i18n="helpTitle"></h2>
+  <p class="lead" data-i18n="helpLead"></p>
+  <div id="faq"></div>
+  <div class="card" style="margin-top:16px"><h3 data-i18n="claudeTitle"></h3><p class="muted" style="margin:0" data-i18n="claudeLead"></p><div id="prompts"></div></div>
+  <div class="card" style="margin-top:16px"><h3 data-i18n="linksTitle"></h3>
+    <ul style="margin:0;padding-left:18px;font-size:14px">
+      <li><a href="https://support.logi.com/hc/en-us/articles/360023300154" target="_blank" rel="noopener">Getting Started – Craft (Logitech Support)</a></li>
+      <li><a href="https://support.logi.com/hc/en-us/articles/360023195294" target="_blank" rel="noopener">How does the Craft keyboard Crown work?</a></li>
+      <li><a href="https://support.logi.com/hc/en-my/articles/32709281787671" target="_blank" rel="noopener">Craft & Crown with the Logi Options+ App</a></li>
+      <li><a href="https://support.logi.com/hc/en-in/articles/360023425133" target="_blank" rel="noopener">Customize and use the Craft keyboard F-keys</a></li>
+      <li><a href="https://app.logi.com" target="_blank" rel="noopener">Logi Options+ (app.logi.com)</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer data-i18n="footer"></footer>
+<div id="toast"></div>
+
+<script>
+/* =========================================================
+   i18n
+   ========================================================= */
+const I={
+brandSub:{ko:'로지텍 크래프트 키보드 연습실',en:'Logitech Craft keyboard practice lab',es:'Laboratorio de práctica del teclado Logitech Craft'},
+tab_home:{ko:'🏠 개요',en:'🏠 Overview',es:'🏠 Inicio'},
+tab_crown:{ko:'🎛️ 크라운',en:'🎛️ Crown',es:'🎛️ Corona'},
+tab_keys:{ko:'⌨️ 키보드',en:'⌨️ Keyboard',es:'⌨️ Teclado'},
+tab_options:{ko:'⚙️ Options+',en:'⚙️ Options+',es:'⚙️ Options+'},
+tab_real:{ko:'✋ 실전 연습',en:'✋ Real practice',es:'✋ Práctica real'},
+tab_missions:{ko:'🏁 미션',en:'🏁 Missions',es:'🏁 Misiones'},
+tab_quiz:{ko:'❓ 퀴즈',en:'❓ Quiz',es:'❓ Quiz'},
+tab_help:{ko:'🛟 도움말',en:'🛟 Help',es:'🛟 Ayuda'},
+heroPill:{ko:'Logitech Craft · Advanced Keyboard with Creative Input Dial',en:'Logitech Craft · Advanced Keyboard with Creative Input Dial',es:'Logitech Craft · Advanced Keyboard with Creative Input Dial'},
+heroTitle:{ko:'크라운 하나로 작업이 빨라지는\n크래프트 키보드, 만지며 배워요',en:'Learn the Craft keyboard\nby actually using it',es:'Aprende el teclado Craft\nusándolo de verdad'},
+heroLead:{ko:'왼쪽 위 알루미늄 다이얼 "크라운(Crown)"을 터치·탭·회전하는 법부터 Easy-Switch 3대 기기 전환, 스마트 F키, 백라이트, Win/Mac 레이아웃 전환, Logi Options+ 설정까지 — 시뮬레이터로 하나씩 따라 하고, 실제 키보드로도 연습해 보세요.',en:'From touching, tapping and turning the aluminium "Crown" dial to Easy-Switch between three devices, smart F-keys, backlighting, Win/Mac layouts and Logi Options+ — follow each step in the simulator, then practise on your real keyboard.',es:'Desde tocar, pulsar y girar la "Corona" de aluminio hasta cambiar entre tres dispositivos con Easy-Switch, teclas F inteligentes, retroiluminación, distribución Win/Mac y Logi Options+: sigue cada paso en el simulador y practica con tu teclado real.'},
+startCrown:{ko:'크라운부터 시작',en:'Start with the Crown',es:'Empezar por la Corona'},
+startKeys:{ko:'키보드 시뮬레이터',en:'Keyboard simulator',es:'Simulador de teclado'},
+startMissions:{ko:'미션 보기',en:'See missions',es:'Ver misiones'},
+partsTitle:{ko:'한눈에 보는 구성',en:'Parts at a glance',es:'Partes de un vistazo'},
+partsLead:{ko:'카드를 누르면 키보드 시뮬레이터에서 해당 위치가 반짝여요.',en:'Click a card to highlight that part on the keyboard simulator.',es:'Pulsa una tarjeta para resaltar esa parte en el simulador.'},
+orderTitle:{ko:'추천 학습 순서',en:'Suggested learning path',es:'Ruta de aprendizaje sugerida'},
+setupTitle:{ko:'처음 연결하기 (공식 시작 가이드 요약)',en:'First-time setup (official guide, summarised)',es:'Primera conexión (guía oficial, resumida)'},
+setupNote:{ko:'예전 "Logitech Options"는 지원이 종료되어, 지금은 Logi Options+ 사용이 권장돼요.',en:'The older "Logitech Options" app has reached end of support; Logi Options+ is now recommended.',es:'La antigua app "Logitech Options" ya no tiene soporte; ahora se recomienda Logi Options+.'},
+crownTitle:{ko:'🎛️ 크라운(Crown) 연습실',en:'🎛️ Crown practice room',es:'🎛️ Sala de práctica de la Corona'},
+crownLead:{ko:'크라운은 세 가지 동작으로 씁니다 — 터치하면 지금 앱에서 쓸 수 있는 기능 목록(오버레이)이 뜨고, 탭하면 기능이 바뀌고, 돌리면 값이 바뀝니다. 위에서 앱을 고르고 직접 돌려 보세요.',en:'The Crown works with three gestures — touch to show the overlay of functions for the current app, tap to change function, turn to change its value. Pick an app above and try it.',es:'La Corona funciona con tres gestos: toca para ver las funciones de la app actual, pulsa para cambiar de función y gira para cambiar su valor. Elige una app arriba y pruébalo.'},
+turnLeft:{ko:'왼쪽으로',en:'Left',es:'Izquierda'},
+turnRight:{ko:'오른쪽으로',en:'Right',es:'Derecha'},
+tapBtn:{ko:'👆 탭(누르기)',en:'👆 Tap (press)',es:'👆 Pulsar'},
+holdBtn:{ko:'✊ 누른 채 돌리기: 끔',en:'✊ Press & turn: off',es:'✊ Pulsar y girar: no'},
+holdBtnOn:{ko:'✊ 누른 채 돌리기: 켬',en:'✊ Press & turn: on',es:'✊ Pulsar y girar: sí'},
+crownHow:{ko:'<b>터치</b> = 마우스를 크라운 위에 올리기 · <b>탭</b> = 클릭 · <b>돌리기</b> = 마우스 휠, 원을 그리듯 드래그, 또는 ←/→ 키 · <b>누른 채 돌리기</b> = Shift + 휠 또는 위 버튼',en:'<b>Touch</b> = hover over the Crown · <b>Tap</b> = click · <b>Turn</b> = mouse wheel, circular drag, or ←/→ keys · <b>Press & turn</b> = Shift + wheel or the button above',es:'<b>Tocar</b> = pasar el ratón sobre la Corona · <b>Pulsar</b> = clic · <b>Girar</b> = rueda, arrastre circular o teclas ←/→ · <b>Pulsar y girar</b> = Shift + rueda o el botón de arriba'},
+modeLbl:{ko:'촉감 모드',en:'Tactile mode',es:'Modo táctil'},
+ratchet:{ko:'래칫(딸깍)',en:'Ratchet',es:'Trinquete'},
+friction:{ko:'프릭션(부드럽게)',en:'Friction',es:'Fricción'},
+optInst:{ko:'Logi Options+ 설치됨',en:'Logi Options+ installed',es:'Logi Options+ instalado'},
+soundLbl:{ko:'딸깍 소리',en:'Click sound',es:'Sonido de clic'},
+appNote:{ko:'※ 앱별 기능 목록은 학습용 예시입니다. 실제 Options+ 프로필의 기능은 앱 버전·설정에 따라 다를 수 있어요.',en:'※ App function lists are learning examples. Real Options+ profiles may differ by app version and settings.',es:'※ Las funciones por app son ejemplos didácticos. Los perfiles reales de Options+ pueden variar según la versión y la configuración.'},
+keysTitle:{ko:'⌨️ 키보드 시뮬레이터',en:'⌨️ Keyboard simulator',es:'⌨️ Simulador de teclado'},
+keysLead:{ko:'키를 눌러 보세요. F키는 기본적으로 밝기·작업 보기·백라이트·미디어·볼륨 같은 "스마트 기능"으로 동작하고, Fn과 함께 누르면 일반 F1–F12가 됩니다. 마우스를 키보드 위로 가져가면 근접 센서가 손을 감지해 백라이트가 켜져요.',en:'Press the keys. By default the F-keys run "smart" functions such as brightness, Task View, backlight, media and volume; with Fn they act as standard F1–F12. Move your mouse over the keyboard — the proximity sensor detects your hand and lights the keys.',es:'Pulsa las teclas. Por defecto, las teclas F ejecutan funciones "inteligentes" (brillo, vista de tareas, retroiluminación, multimedia, volumen); con Fn funcionan como F1–F12. Acerca el ratón al teclado: el sensor de proximidad detecta tu mano y enciende la luz.'},
+powerLbl:{ko:'전원 스위치',en:'Power switch',es:'Interruptor'},
+usbLbl:{ko:'USB-C 충전 케이블',en:'USB-C charging cable',es:'Cable de carga USB-C'},
+battLbl:{ko:'배터리',en:'Battery',es:'Batería'},
+ambLbl:{ko:'방 밝기',en:'Room light',es:'Luz ambiente'},
+autoBl:{ko:'자동 백라이트',en:'Auto backlight',es:'Luz automática'},
+osLbl:{ko:'레이아웃',en:'Layout',es:'Distribución'},
+kbNote:{ko:'※ 키 배열은 학습용 개념도입니다. 실제 제품의 키 위치·아이콘과 조금 다를 수 있어요. Fn 키는 한 번 클릭하면 "누르고 있는 상태"가 됩니다.',en:'※ The layout is a learning diagram; real key positions and icons may differ slightly. Click Fn once to "hold" it.',es:'※ La distribución es un esquema didáctico; las posiciones e iconos reales pueden variar. Haz clic una vez en Fn para "mantenerla".'},
+screenTitle:{ko:'🖥️ 연결된 컴퓨터 화면 (시뮬레이션)',en:'🖥️ Connected computer (simulated)',es:'🖥️ Ordenador conectado (simulado)'},
+esTitle:{ko:'🔁 Easy-Switch 채널',en:'🔁 Easy-Switch channels',es:'🔁 Canales Easy-Switch'},
+fnTitle:{ko:'🧩 Fn 조합 단축키',en:'🧩 Fn combinations',es:'🧩 Combinaciones con Fn'},
+optTitle:{ko:'⚙️ Logi Options+ 설정 연습',en:'⚙️ Logi Options+ settings practice',es:'⚙️ Práctica de ajustes de Logi Options+'},
+optLead:{ko:'실제 Options+ 앱처럼 크라운의 누르기/돌리기/누른 채 돌리기 동작과 F키를 바꿔 보세요. 바꾼 설정은 크라운·키보드 시뮬레이터에 바로 반영됩니다.',en:'Like the real Options+ app, change what the Crown does on Press / Turn / Press & Turn and reassign F-keys. Your changes apply instantly to the Crown and keyboard simulators.',es:'Como en la app Options+ real, cambia qué hace la Corona al Pulsar / Girar / Pulsar y girar y reasigna las teclas F. Los cambios se aplican al instante en los simuladores.'},
+simPill:{ko:'연습용 시뮬레이션',en:'Practice simulation',es:'Simulación de práctica'},
+optCrown:{ko:'크라운 (전역 동작)',en:'Crown (global actions)',es:'Corona (acciones globales)'},
+lblPress:{ko:'누르기 (Press)',en:'Press',es:'Pulsar (Press)'},
+lblKs:{ko:'보낼 단축키',en:'Keystroke to send',es:'Atajo a enviar'},
+lblTurn:{ko:'돌리기 (Turn)',en:'Turn',es:'Girar (Turn)'},
+lblPT:{ko:'누른 채 돌리기 (Press & Turn)',en:'Press & Turn',es:'Pulsar y girar'},
+optCrownNote:{ko:'동작 목록은 Logitech 지원 문서의 Options+ 표를 따릅니다. 앱 프로필이 없는 화면(데스크톱)에서 이 설정이 쓰여요.',en:'Action lists follow the Options+ table in Logitech’s support article. These apply where no app profile is active (desktop).',es:'Las listas siguen la tabla de Options+ del soporte de Logitech. Se usan donde no hay perfil de app (escritorio).'},
+tryCrown:{ko:'크라운에서 테스트하기 →',en:'Test on the Crown →',es:'Probar en la Corona →'},
+optF:{ko:'F키 사용자 지정',en:'Customize F-keys',es:'Personalizar teclas F'},
+fStdLbl:{ko:'F1–F12를 표준 기능키로 사용 (Fn+Esc와 연동)',en:'Use F1–F12 as standard function keys (synced with Fn+Esc)',es:'Usar F1–F12 como teclas de función estándar (sincronizado con Fn+Esc)'},
+optFNote:{ko:'F키를 고른 뒤 오른쪽 Action Picker처럼 기능을 선택하세요. (예: F12 → 계산기)',en:'Pick an F-key, then choose an action like in the Action Picker (e.g. F12 → Calculator).',es:'Elige una tecla F y luego una acción como en el Action Picker (p. ej., F12 → Calculadora).'},
+optES:{ko:'Easy-Switch 기기',en:'Easy-Switch devices',es:'Dispositivos Easy-Switch'},
+optESNote:{ko:'각 채널에 어떤 기기가 연결되어 있는지 Options+에서 확인할 수 있어요.',en:'Options+ shows which device is paired to each channel.',es:'Options+ muestra qué dispositivo está emparejado en cada canal.'},
+optApps:{ko:'크라운 앱 프로필 (공식 지원 앱)',en:'Crown app profiles (officially supported)',es:'Perfiles de app de la Corona (oficiales)'},
+realTitle:{ko:'✋ 실제 키보드로 연습',en:'✋ Practise with your real keyboard',es:'✋ Practica con tu teclado real'},
+realLead:{ko:'크래프트(또는 지금 쓰는 키보드)를 실제로 눌러 보세요. 키 테스트, 단축키 드릴, 타자 연습을 할 수 있어요.',en:'Press your real Craft (or any keyboard). Try the key tester, shortcut drill and typing practice.',es:'Pulsa tu Craft real (o cualquier teclado). Prueba el test de teclas, los atajos y la mecanografía.'},
+sub_test:{ko:'🔍 키 테스트',en:'🔍 Key tester',es:'🔍 Test de teclas'},
+sub_drill:{ko:'⚡ 단축키 드릴',en:'⚡ Shortcut drill',es:'⚡ Atajos'},
+sub_type:{ko:'📝 타자 연습',en:'📝 Typing',es:'📝 Mecanografía'},
+reset:{ko:'초기화',en:'Reset',es:'Reiniciar'},
+testNote:{ko:'※ 화면 밝기, 백라이트, Easy-Switch, Fn 키와 크라운은 키보드·운영체제 안에서 처리되어 브라우저가 감지하지 못할 수 있어요. 볼륨·미디어 키는 브라우저에 따라 표시됩니다.',en:'※ Brightness, backlight, Easy-Switch, Fn and the Crown are handled inside the keyboard/OS, so a browser may not see them. Volume and media keys show up depending on the browser.',es:'※ Brillo, retroiluminación, Easy-Switch, Fn y la Corona se gestionan en el teclado/SO y el navegador puede no detectarlos. Las teclas de volumen y multimedia dependen del navegador.'},
+logTitle:{ko:'입력 기록',en:'Input log',es:'Registro'},
+switchOs:{ko:'Win/Mac 바꾸기',en:'Switch Win/Mac',es:'Cambiar Win/Mac'},
+score:{ko:'성공',en:'Correct',es:'Aciertos'},
+tries:{ko:'시도',en:'Tries',es:'Intentos'},
+skip:{ko:'건너뛰기',en:'Skip',es:'Saltar'},
+drillNote:{ko:'이 페이지에 포커스가 있을 때 실제 키보드로 눌러 보세요. 브라우저 기본 동작은 막아 두었어요.',en:'With this page focused, press the shortcut on your real keyboard. Browser defaults are blocked here.',es:'Con esta página activa, pulsa el atajo en tu teclado real. Las acciones del navegador están bloqueadas.'},
+typePh:{ko:'여기에 위 문장을 그대로 입력하세요',en:'Type the sentence above here',es:'Escribe aquí la frase de arriba'},
+speed:{ko:'속도(타/분)',en:'Speed (CPM)',es:'Velocidad (PPM)'},
+acc:{ko:'정확도',en:'Accuracy',es:'Precisión'},
+doneN:{ko:'완료 문장',en:'Sentences',es:'Frases'},
+nextSent:{ko:'다음 문장 →',en:'Next sentence →',es:'Siguiente frase →'},
+typeNote:{ko:'문장은 현재 선택한 언어로 나와요. 한/EN/ES를 바꿔 다른 언어로도 연습해 보세요.',en:'Sentences follow the selected language — switch KO/EN/ES to practise others.',es:'Las frases siguen el idioma elegido: cambia KO/EN/ES para practicar otros.'},
+misTitle:{ko:'🏁 미션',en:'🏁 Missions',es:'🏁 Misiones'},
+misLead:{ko:'하나씩 해 보면 자동으로 체크돼요. 진행 상황은 이 브라우저에 저장됩니다.',en:'Each mission ticks itself off as you do it. Progress is saved in this browser.',es:'Cada misión se marca sola al completarla. El progreso se guarda en este navegador.'},
+resetAll:{ko:'진행 초기화',en:'Reset progress',es:'Reiniciar progreso'},
+go:{ko:'해 보기 →',en:'Try it →',es:'Probar →'},
+quizTitle:{ko:'❓ 확인 퀴즈',en:'❓ Check quiz',es:'❓ Quiz de repaso'},
+quizLead:{ko:'80% 이상 맞히면 미션 완료!',en:'Score 80% or more to complete the mission!',es:'¡Consigue un 80% o más para completar la misión!'},
+retry:{ko:'다시 풀기',en:'Retry',es:'Reintentar'},
+helpTitle:{ko:'🛟 문제 해결 & 팁',en:'🛟 Troubleshooting & tips',es:'🛟 Solución de problemas y consejos'},
+helpLead:{ko:'자주 겪는 상황과 해결 방법이에요.',en:'Common situations and how to fix them.',es:'Situaciones frecuentes y cómo resolverlas.'},
+claudeTitle:{ko:'🤖 Claude와 함께 설정하기',en:'🤖 Set it up with Claude',es:'🤖 Configúralo con Claude'},
+claudeLead:{ko:'아래 문장을 복사해 Claude에게 물어보면 내 작업에 맞는 크라운·F키 설정을 함께 짤 수 있어요.',en:'Copy a prompt and ask Claude to plan Crown and F-key settings for your own workflow.',es:'Copia una petición y pide a Claude que planifique la Corona y las teclas F para tu trabajo.'},
+linksTitle:{ko:'📚 공식 자료',en:'📚 Official resources',es:'📚 Recursos oficiales'},
+copy:{ko:'복사',en:'Copy',es:'Copiar'},
+copied:{ko:'복사했어요!',en:'Copied!',es:'¡Copiado!'},
+footer:{ko:'Craft Lab · 다인에듀 후안샘 · Logitech, Craft, Logi Options+는 Logitech의 상표이며 이 사이트는 비공식 학습용 연습 사이트입니다.',en:'Craft Lab · Dain Edu · Logitech, Craft and Logi Options+ are trademarks of Logitech. This is an unofficial practice site.',es:'Craft Lab · Dain Edu · Logitech, Craft y Logi Options+ son marcas de Logitech. Este es un sitio de práctica no oficial.'},
+missionDone:{ko:'🎉 미션 완료',en:'🎉 Mission complete',es:'🎉 Misión completada'},
+allDone:{ko:'🏆 모든 미션 완료! 이제 크래프트 마스터예요!',en:'🏆 All missions done! You are a Craft master!',es:'🏆 ¡Todas las misiones completadas! ¡Eres un maestro del Craft!'},
+powerOff:{ko:'전원이 꺼져 있어요. 전원 스위치를 켜 주세요.',en:'The keyboard is off. Turn on the power switch.',es:'El teclado está apagado. Enciende el interruptor.'},
+battDead:{ko:'배터리가 다 됐어요. USB-C 케이블을 연결하세요.',en:'Battery is empty. Connect the USB-C cable.',es:'Batería agotada. Conecta el cable USB-C.'},
+noOverlay:{ko:'Options+가 없으면 오버레이가 나타나지 않고, 돌리면 볼륨만 바뀌어요.',en:'Without Options+, no overlay appears and turning only changes volume.',es:'Sin Options+ no aparece la superposición y al girar solo cambia el volumen.'},
+desktop:{ko:'데스크톱(전역)',en:'Desktop (global)',es:'Escritorio (global)'},
+holdMore:{ko:'3초 동안 길게 눌러야 해요.',en:'Hold it for 3 seconds.',es:'Mantenla pulsada 3 segundos.'},
+fnStdOn:{ko:'F1–F12 표준 기능키 모드',en:'Standard F1–F12 mode',es:'Modo F1–F12 estándar'},
+fnStdOff:{ko:'스마트 기능키 모드 (기본)',en:'Smart-key mode (default)',es:'Modo de teclas inteligentes (predeterminado)'},
+pairing:{ko:'채널 {n} 페어링 모드! (LED가 빠르게 깜박여요) 연결할 기기를 고르세요:',en:'Channel {n} pairing mode! (LED blinks fast) Choose a device to connect:',es:'¡Canal {n} en modo de emparejamiento! (el LED parpadea rápido) Elige un dispositivo:'},
+noDevice:{ko:'채널 {n}: 연결된 기기가 없어요 (LED 깜박임). 키를 3초 길게 눌러 페어링하세요.',en:'Channel {n}: no device paired (LED blinking). Hold the key 3 s to pair.',es:'Canal {n}: sin dispositivo (LED parpadeando). Mantén la tecla 3 s para emparejar.'},
+chTo:{ko:'채널 {n} → {d}',en:'Channel {n} → {d}',es:'Canal {n} → {d}'},
+notPaired:{ko:'연결 안 됨',en:'Not paired',es:'Sin emparejar'},
+active:{ko:'사용 중',en:'Active',es:'Activo'},
+channel:{ko:'채널',en:'Channel',es:'Canal'},
+device:{ko:'기기',en:'Device',es:'Dispositivo'},
+status:{ko:'상태',en:'Status',es:'Estado'},
+connectVia:{ko:'연결',en:'via',es:'vía'},
+typedHint:{ko:'⌨ 입력: ',en:'⌨ Typed: ',es:'⌨ Escrito: '},
+desk:{ko:'데스크톱',en:'Desktop',es:'Escritorio'},
+locked:{ko:'🔒 잠김 · 클릭해서 해제',en:'🔒 Locked · click to unlock',es:'🔒 Bloqueado · clic para desbloquear'},
+shotSaved:{ko:'📷 스크린샷 저장됨',en:'📷 Screenshot saved',es:'📷 Captura guardada'},
+pressLbl:{ko:'누르기',en:'Press',es:'Pulsar'},
+turnLbl:{ko:'돌리기',en:'Turn',es:'Girar'},
+ptLbl:{ko:'누른 채',en:'Press+turn',es:'Pulsar+girar'},
+touchTap:{ko:'터치 중 · 탭으로 기능 바꾸기',en:'Touching · tap to change',es:'Tocando · pulsa para cambiar'},
+stdKey:{ko:'⌨ {k} 키 입력 (표준 기능키)',en:'⌨ {k} sent (standard key)',es:'⌨ {k} enviada (tecla estándar)'},
+pauseBreak:{ko:'Fn+B → Pause/Break',en:'Fn+B → Pause/Break',es:'Fn+B → Pausa/Inter'},
+osSet:{ko:'{o} 레이아웃으로 전환! (채널 LED가 깜박여 알려 줘요)',en:'Switched to {o} layout! (the channel LED blinks to confirm)',es:'¡Cambiado a distribución {o}! (el LED del canal parpadea para confirmarlo)'},
+scrollLock:{ko:'Scroll Lock',en:'Scroll Lock',es:'Bloq Despl'},
+ksSent:{ko:'단축키 "{k}" 전송',en:'Sent keystroke "{k}"',es:'Atajo "{k}" enviado'},
+smartRun:{ko:'Smart Action 실행 (여러 동작을 한 번에)',en:'Smart Action run (several steps at once)',es:'Smart Action ejecutada (varios pasos a la vez)'},
+charging:{ko:'충전 중',en:'Charging',es:'Cargando'},
+testCount:{ko:'테스트한 키: {n}개',en:'Keys tested: {n}',es:'Teclas probadas: {n}'},
+quizScore:{ko:'점수: {s} / {t}',en:'Score: {s} / {t}',es:'Puntuación: {s} / {t}'},
+again:{ko:'다시 해 보세요',en:'Try again',es:'Inténtalo de nuevo'},
+great:{ko:'정확해요! 👍',en:'Correct! 👍',es:'¡Correcto! 👍'},
+handNear:{ko:'손 감지',en:'Hand',es:'Mano'},
+battery:{ko:'배터리',en:'battery',es:'batería'},
+};
+/* ========================================================= */
+const S={
+  lang:'ko',sec:'home',sub:'test',
+  os:'win',fnStd:false,fnLatch:false,shift:false,power:true,
+  ch:1,chans:{1:{dev:'winpc'},2:{dev:null},3:{dev:null}},pairing:null,
+  bl:5,autoBl:true,ambient:30,hand:false,battery:72,charging:false,caps:false,scroll:false,
+  pc:{vol:50,muted:false,bright:80,playing:false,track:0,desk:1,zoom:100,appIdx:0,hideWins:false,expose:false,locked:false,typed:''},
+  crown:{app:'desktop',fi:0,mode:'ratchet',opt:true,hold:false,rot:0},
+  opt:{press:'actionsRing',turn:'volume',pt:'brightness',ks:'Ctrl + Z'},
+  fmap:{},done:{},sound:true,
+  stats:{tested:{},drill:0,drillTries:0,typed:0},
+  quiz:{}
+};
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const tt=o=>(o&&typeof o==='object')?(o[S.lang]??o.ko):o;
+const t=(k,v)=>{let s=I[k]?(I[k][S.lang]??I[k].ko):k; if(v) for(const x in v) s=s.split('{'+x+'}').join(v[x]); return s;};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function save(){try{localStorage.setItem('logiCraftLab',JSON.stringify({lang:S.lang,done:S.done,fmap:S.fmap,opt:S.opt,fnStd:S.fnStd,sound:S.sound}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem('logiCraftLab')||'null'); if(d){Object.assign(S.done,d.done||{});Object.assign(S.fmap,d.fmap||{});Object.assign(S.opt,d.opt||{}); if(d.lang)S.lang=d.lang; S.fnStd=!!d.fnStd; if(d.sound===false)S.sound=false;}}catch(e){}}
+let toastT;
+function toast(msg,win){const el=$('#toast');el.textContent=msg;el.className='show'+(win?' good':'');clearTimeout(toastT);toastT=setTimeout(()=>el.className='',2300);}
+/* sound */
+let AC;
+function tick(){ if(!S.sound) return; try{AC=AC||new (window.AudioContext||window.webkitAudioContext)(); const o=AC.createOscillator(),g=AC.createGain(); o.type='square'; o.frequency.value=2200; g.gain.setValueAtTime(.06,AC.currentTime); g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.025); o.connect(g).connect(AC.destination); o.start(); o.stop(AC.currentTime+.03);}catch(e){} }
+
+/* =========================================================
+   Data
+   ========================================================= */
+const DEVICES={
+  winpc:{n:{ko:'Windows 데스크톱',en:'Windows desktop',es:'PC Windows'},via:'Unifying',os:'win'},
+  mac:{n:{ko:'MacBook',en:'MacBook',es:'MacBook'},via:'Bluetooth',os:'mac'},
+  winlap:{n:{ko:'Windows 노트북',en:'Windows laptop',es:'Portátil Windows'},via:'Bluetooth',os:'win'}
+};
+const ACTS={
+  brDown:{i:'☼−',n:{ko:'화면 밝기 낮추기',en:'Brightness down',es:'Bajar brillo'}},
+  brUp:{i:'☼+',n:{ko:'화면 밝기 높이기',en:'Brightness up',es:'Subir brillo'}},
+  taskView:{i:'⧉',n:{ko:'작업 보기',en:'Task View',es:'Vista de tareas'},mac:{ko:'Mission Control',en:'Mission Control',es:'Mission Control'}},
+  actionCenter:{i:'▤',n:{ko:'알림 센터',en:'Action Center',es:'Centro de actividades'}},
+  showDesktop:{i:'▭',n:{ko:'바탕화면 보기/숨기기',en:'Show/hide desktop',es:'Mostrar/ocultar escritorio'}},
+  blDown:{i:'◐−',n:{ko:'키 백라이트 낮추기',en:'Backlight down',es:'Bajar retroiluminación'}},
+  blUp:{i:'◐+',n:{ko:'키 백라이트 높이기',en:'Backlight up',es:'Subir retroiluminación'}},
+  prev:{i:'⏮',n:{ko:'이전 곡',en:'Previous',es:'Anterior'}},
+  play:{i:'⏯',n:{ko:'재생/일시정지',en:'Play/Pause',es:'Reproducir/Pausa'}},
+  next:{i:'⏭',n:{ko:'다음 곡',en:'Next',es:'Siguiente'}},
+  mute:{i:'🔇',n:{ko:'음소거',en:'Mute',es:'Silenciar'}},
+  volDown:{i:'🔉',n:{ko:'볼륨 낮추기',en:'Volume down',es:'Bajar volumen'}},
+  volUp:{i:'🔊',n:{ko:'볼륨 높이기',en:'Volume up',es:'Subir volumen'}},
+  calc:{i:'🧮',n:{ko:'계산기',en:'Calculator',es:'Calculadora'}},
+  prtsc:{i:'📷',n:{ko:'화면 캡처',en:'Print Screen',es:'Imprimir pantalla'}},
+  scrlk:{i:'⇳',n:{ko:'Scroll Lock',en:'Scroll Lock',es:'Bloq Despl'}},
+  lock:{i:'🔒',n:{ko:'기기 잠금',en:'Device lock',es:'Bloquear equipo'}}
+};
+const FDEF={F1:'brDown',F2:'brUp',F3:'taskView',F4:'actionCenter',F5:'showDesktop',F6:'blDown',F7:'blUp',F8:'prev',F9:'play',F10:'next',F11:'mute',F12:'volDown',VolUp:'volUp',Calc:'calc',PrtSc:'prtsc',ScrLk:'scrlk',Lock:'lock'};
+const fAct=id=>S.fmap[id]||FDEF[id];
+const PRESS={actionsRing:{ko:'Actions Ring 표시',en:'Show Actions Ring',es:'Mostrar Actions Ring'},playPause:{ko:'재생/일시정지',en:'Play/Pause',es:'Reproducir/Pausa'},appExpose:{ko:'App Exposé (창 펼치기)',en:'App Exposé',es:'App Exposé'},showDesktop:{ko:'바탕화면 보기/숨기기',en:'Show/hide desktop',es:'Mostrar/ocultar escritorio'},mute:{ko:'스피커 음소거/해제',en:'Mute/unmute speaker',es:'Silenciar/activar altavoz'},keystroke:{ko:'단축키 보내기',en:'Keystroke shortcut',es:'Atajo de teclado'},smart:{ko:'Smart Actions',en:'Smart Actions',es:'Smart Actions'}};
+const TURN={volume:{ko:'볼륨 올리기/내리기',en:'Volume up/down',es:'Volumen +/−'},brightness:{ko:'화면 밝기 올리기/내리기',en:'Brightness up/down',es:'Brillo +/−'},navApps:{ko:'앱 사이 이동',en:'Navigate between apps',es:'Navegar entre apps'},switchDesk:{ko:'데스크톱 전환',en:'Switch between desktops',es:'Cambiar de escritorio'},zoom:{ko:'확대/축소',en:'Zoom in/out',es:'Zoom +/−'},keystroke:{ko:'단축키 보내기 (←/→)',en:'Keystroke shortcut (←/→)',es:'Atajo de teclado (←/→)'}};
+const PT_LIST=['volume','brightness','navApps','switchDesk'];
+const WINS=['Word','Photoshop','Spotify'];
+const TRACKS=['Despacito','Bailando','La Bicicleta','Vivir Mi Vida'];
+function F(id,n,min,max,step,v,u,extra){return Object.assign({id,n,min,max,step,v,u:u||''},extra||{});}
+const APPS={
+  desktop:{ab:'⊞',c:'#a0aec0',n:{ko:'데스크톱(전역)',en:'Desktop (global)',es:'Escritorio (global)'}},
+  photoshop:{ab:'Ps',c:'#31a8ff',n:{ko:'Photoshop',en:'Photoshop',es:'Photoshop'},fns:[
+    F('size',{ko:'브러시 크기',en:'Brush size',es:'Tamaño del pincel'},5,500,5,60,'px'),
+    F('hard',{ko:'브러시 경도',en:'Hardness',es:'Dureza'},0,100,5,50,'%'),
+    F('opac',{ko:'불투명도',en:'Opacity',es:'Opacidad'},0,100,5,100,'%')]},
+  lightroom:{ab:'Lr',c:'#31a8ff',n:{ko:'Lightroom Classic',en:'Lightroom Classic',es:'Lightroom Classic'},fns:[
+    F('exp',{ko:'노출',en:'Exposure',es:'Exposición'},-5,5,.1,0,' EV',{dec:1}),
+    F('con',{ko:'대비',en:'Contrast',es:'Contraste'},-100,100,5,0,''),
+    F('temp',{ko:'색온도',en:'Temperature',es:'Temperatura'},2000,12000,100,5500,'K'),
+    F('sat',{ko:'채도',en:'Saturation',es:'Saturación'},-100,100,5,0,'')]},
+  illustrator:{ab:'Ai',c:'#ff9a00',n:{ko:'Illustrator',en:'Illustrator',es:'Illustrator'},fns:[
+    F('stroke',{ko:'선 두께',en:'Stroke weight',es:'Grosor de trazo'},0,20,.5,2,'pt',{dec:1}),
+    F('rot',{ko:'회전',en:'Rotate',es:'Rotar'},-180,180,5,0,'°'),
+    F('opac',{ko:'불투명도',en:'Opacity',es:'Opacidad'},0,100,5,100,'%')]},
+  premiere:{ab:'Pr',c:'#9999ff',n:{ko:'Premiere Pro',en:'Premiere Pro',es:'Premiere Pro'},fns:[
+    F('scrub',{ko:'타임라인 이동(프레임)',en:'Timeline scrub (frames)',es:'Desplazar línea de tiempo'},0,300,1,40,'f'),
+    F('tzoom',{ko:'타임라인 확대',en:'Timeline zoom',es:'Zoom de línea de tiempo'},1,10,1,4,'x')]},
+  indesign:{ab:'Id',c:'#ff3366',n:{ko:'InDesign',en:'InDesign',es:'InDesign'},fns:[
+    F('fs',{ko:'글자 크기',en:'Font size',es:'Tamaño de fuente'},6,96,1,18,'pt'),
+    F('lead',{ko:'행간',en:'Leading',es:'Interlineado'},6,120,1,24,'pt'),
+    F('track',{ko:'자간',en:'Tracking',es:'Tracking'},-100,200,10,0,'')]},
+  word:{ab:'W',c:'#4a8bf5',n:{ko:'Word',en:'Word',es:'Word'},fns:[
+    F('fs',{ko:'글꼴 크기',en:'Font size',es:'Tamaño de fuente'},8,72,1,12,'pt'),
+    F('zoom',{ko:'확대/축소',en:'Zoom',es:'Zoom'},50,200,10,100,'%')]},
+  excel:{ab:'X',c:'#33c481',n:{ko:'Excel',en:'Excel',es:'Excel'},fns:[
+    F('colw',{ko:'열 너비',en:'Column width',es:'Ancho de columna'},4,40,1,10,''),
+    F('chart',{ko:'차트 종류',en:'Chart type',es:'Tipo de gráfico'},0,3,1,0,'',{list:[{ko:'막대',en:'Bar',es:'Barras'},{ko:'꺾은선',en:'Line',es:'Líneas'},{ko:'원형',en:'Pie',es:'Circular'},{ko:'영역',en:'Area',es:'Área'}]}),
+    F('zoom',{ko:'확대/축소',en:'Zoom',es:'Zoom'},50,200,10,100,'%')]},
+  powerpoint:{ab:'P',c:'#ed6c47',n:{ko:'PowerPoint',en:'PowerPoint',es:'PowerPoint'},fns:[
+    F('size',{ko:'도형 크기',en:'Shape size',es:'Tamaño de forma'},20,200,5,100,'%'),
+    F('rot',{ko:'회전',en:'Rotate',es:'Rotar'},-180,180,5,0,'°')]},
+  spotify:{ab:'♫',c:'#1ed760',n:{ko:'Spotify',en:'Spotify',es:'Spotify'},fns:[
+    F('vol',{ko:'볼륨',en:'Volume',es:'Volumen'},0,100,2,60,'%'),
+    F('seek',{ko:'재생 위치',en:'Seek',es:'Posición'},0,210,5,30,'',{time:1})]}
+};
+const AV=(a,id)=>APPS[a].fns.find(f=>f.id===id).v;
+function fmt(fn){ if(fn.list) return tt(fn.list[Math.round(fn.v)]); if(fn.time){const s=Math.round(fn.v);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');} const d=fn.dec||0; let v=(+fn.v).toFixed(d); if(fn.id==='exp'&&fn.v>0) v='+'+v; return v+fn.u; }
+
+/* =========================================================
+   Missions / quiz / help content
+   ========================================================= */
+const MIS=[
+ {id:'touch',s:'crown',app:'photoshop',n:{ko:'크라운 터치하기',en:'Touch the Crown',es:'Tocar la Corona'},h:{ko:'크라운 위에 마우스를 올려 기능 오버레이를 띄우세요.',en:'Hover over the Crown to show the overlay.',es:'Pasa el ratón sobre la Corona para ver la superposición.'}},
+ {id:'tap',s:'crown',app:'photoshop',n:{ko:'탭으로 기능 바꾸기',en:'Tap to switch function',es:'Pulsar para cambiar de función'},h:{ko:'앱 화면에서 크라운을 클릭(탭)해 다음 기능으로 바꾸세요.',en:'In an app, click (tap) the Crown to move to the next function.',es:'En una app, haz clic en la Corona para pasar a la siguiente función.'}},
+ {id:'vol30',s:'crown',app:'desktop',n:{ko:'볼륨을 정확히 30으로',en:'Set volume to exactly 30',es:'Volumen exactamente a 30'},h:{ko:'데스크톱에서 크라운을 돌려 볼륨 30을 맞추세요. (래칫 모드 추천)',en:'On the desktop, turn the Crown to volume 30 (ratchet mode helps).',es:'En el escritorio, gira la Corona hasta volumen 30 (mejor en trinquete).'}},
+ {id:'mode',s:'crown',n:{ko:'촉감 모드 바꿔 보기',en:'Change the tactile mode',es:'Cambiar el modo táctil'},h:{ko:'래칫(딸깍) ↔ 프릭션(부드럽게)을 바꿔 차이를 느껴 보세요.',en:'Switch between ratchet and friction and feel the difference.',es:'Cambia entre trinquete y fricción y nota la diferencia.'}},
+ {id:'ps120',s:'crown',app:'photoshop',n:{ko:'Photoshop 브러시 120px',en:'Photoshop brush to 120 px',es:'Pincel de Photoshop a 120 px'},h:{ko:'브러시 크기를 120px로 맞추세요.',en:'Set the brush size to 120 px.',es:'Ajusta el tamaño del pincel a 120 px.'}},
+ {id:'lr1',s:'crown',app:'lightroom',n:{ko:'Lightroom 노출 +1.0',en:'Lightroom exposure +1.0',es:'Exposición de Lightroom +1,0'},h:{ko:'노출을 +1.0 EV로 맞추세요.',en:'Set exposure to +1.0 EV.',es:'Ajusta la exposición a +1,0 EV.'}},
+ {id:'word24',s:'crown',app:'word',n:{ko:'Word 글꼴 24pt',en:'Word font size 24 pt',es:'Fuente de Word a 24 pt'},h:{ko:'글꼴 크기를 24pt로 맞추세요.',en:'Set font size to 24 pt.',es:'Ajusta la fuente a 24 pt.'}},
+ {id:'pie',s:'crown',app:'excel',n:{ko:'Excel 차트를 원형으로',en:'Excel chart to Pie',es:'Gráfico de Excel a circular'},h:{ko:'탭으로 "차트 종류"를 고른 뒤 돌려서 원형 차트로 바꾸세요.',en:'Tap to "Chart type", then turn to Pie.',es:'Pulsa hasta "Tipo de gráfico" y gira hasta Circular.'}},
+ {id:'pt',s:'crown',app:'desktop',n:{ko:'누른 채 돌리기',en:'Press & turn',es:'Pulsar y girar'},h:{ko:'Shift+휠 또는 "누른 채 돌리기" 버튼을 켜고 돌려 보세요.',en:'Use Shift+wheel or the "Press & turn" button and turn.',es:'Usa Shift+rueda o el botón "Pulsar y girar" y gira.'}},
+ {id:'pair2',s:'keys',n:{ko:'Easy-Switch 2번에 기기 페어링',en:'Pair a device on Easy-Switch 2',es:'Emparejar en Easy-Switch 2'},h:{ko:'키보드의 "2" Easy-Switch 키를 3초 길게 누르고 기기를 고르세요.',en:'Hold Easy-Switch key "2" for 3 s, then choose a device.',es:'Mantén la tecla Easy-Switch "2" 3 s y elige un dispositivo.'}},
+ {id:'swch',s:'keys',n:{ko:'채널 전환하기',en:'Switch channel',es:'Cambiar de canal'},h:{ko:'Easy-Switch 키를 짧게 눌러 다른 채널로 바꾸세요.',en:'Short-press an Easy-Switch key to change channel.',es:'Pulsa brevemente una tecla Easy-Switch para cambiar de canal.'}},
+ {id:'fno',s:'keys',n:{ko:'Fn+O로 Mac 레이아웃',en:'Fn+O for Mac layout',es:'Fn+O para distribución Mac'},h:{ko:'Fn을 클릭한 다음 O 키를 3초 길게 누르세요.',en:'Click Fn, then hold O for 3 s.',es:'Haz clic en Fn y mantén O 3 s.'}},
+ {id:'fnesc',s:'keys',n:{ko:'Fn+Esc로 F키 모드 전환',en:'Fn+Esc to swap F-key mode',es:'Fn+Esc para cambiar modo F'},h:{ko:'Fn을 클릭한 다음 Esc를 누르세요.',en:'Click Fn, then press Esc.',es:'Haz clic en Fn y luego en Esc.'}},
+ {id:'blmax',s:'keys',n:{ko:'백라이트 최대로',en:'Backlight to max',es:'Retroiluminación al máximo'},h:{ko:'F7(◐+)을 눌러 백라이트를 최대(8단계)로 올리세요.',en:'Press F7 (◐+) up to the max (level 8).',es:'Pulsa F7 (◐+) hasta el máximo (nivel 8).'}},
+ {id:'mute',s:'keys',n:{ko:'F11로 음소거',en:'Mute with F11',es:'Silenciar con F11'},h:{ko:'스마트 키 모드에서 F11(🔇)을 누르세요.',en:'In smart-key mode, press F11 (🔇).',es:'En modo inteligente, pulsa F11 (🔇).'}},
+ {id:'optpress',s:'options',n:{ko:'크라운 누르기 = 재생/일시정지',en:'Crown press = Play/Pause',es:'Pulsar Corona = Reproducir/Pausa'},h:{ko:'Options+에서 누르기를 "재생/일시정지"로 바꾼 뒤 데스크톱에서 크라운을 탭하세요.',en:'Set Press to "Play/Pause" in Options+, then tap the Crown on the desktop.',es:'Pon Pulsar en "Reproducir/Pausa" en Options+ y pulsa la Corona en el escritorio.'}},
+ {id:'f12calc',s:'options',n:{ko:'F12에 계산기 할당 후 실행',en:'Assign Calculator to F12 and use it',es:'Asignar Calculadora a F12 y usarla'},h:{ko:'Options+에서 F12 → 계산기로 바꾸고 키보드에서 F12를 누르세요.',en:'Set F12 → Calculator in Options+, then press F12 on the keyboard.',es:'Pon F12 → Calculadora en Options+ y pulsa F12 en el teclado.'}},
+ {id:'real10',s:'real',sub:'test',n:{ko:'실제 키 10개 테스트',en:'Test 10 real keys',es:'Probar 10 teclas reales'},h:{ko:'실제 키보드에서 서로 다른 키 10개를 눌러 보세요.',en:'Press 10 different keys on your real keyboard.',es:'Pulsa 10 teclas distintas en tu teclado real.'}},
+ {id:'drill5',s:'real',sub:'drill',n:{ko:'단축키 5개 성공',en:'5 shortcuts correct',es:'5 atajos correctos'},h:{ko:'단축키 드릴에서 5개를 맞히세요.',en:'Get 5 right in the shortcut drill.',es:'Acierta 5 en los atajos.'}},
+ {id:'type1',s:'real',sub:'type',n:{ko:'타자 1문장 (정확도 90%+)',en:'Type 1 sentence (90%+ accuracy)',es:'Escribir 1 frase (90%+ precisión)'},h:{ko:'타자 연습에서 한 문장을 정확도 90% 이상으로 완성하세요.',en:'Finish a sentence with at least 90% accuracy.',es:'Termina una frase con al menos 90% de precisión.'}},
+ {id:'quiz',s:'quiz',n:{ko:'퀴즈 80% 이상',en:'Quiz 80% or more',es:'Quiz 80% o más'},h:{ko:'확인 퀴즈를 풀어 80% 이상 맞히세요.',en:'Score 80%+ in the quiz.',es:'Consigue 80%+ en el quiz.'}}
+];
+const QUIZ=[
+ {q:{ko:'크라운을 "터치"하면 어떤 일이 일어나나요? (Options+ 설치 시)',en:'What happens when you "touch" the Crown (with Options+)?',es:'¿Qué ocurre al "tocar" la Corona (con Options+)?'},o:[{ko:'현재 앱에서 쓸 수 있는 기능 오버레이가 나타난다',en:'An overlay of functions for the current app appears',es:'Aparece la superposición de funciones de la app'},{ko:'컴퓨터가 잠긴다',en:'The computer locks',es:'El ordenador se bloquea'},{ko:'백라이트가 꺼진다',en:'The backlight turns off',es:'Se apaga la luz'},{ko:'채널이 바뀐다',en:'The channel changes',es:'Cambia el canal'}],a:0,e:{ko:'터치 → 오버레이, 탭 → 기능 변경, 돌리기 → 값 변경.',en:'Touch → overlay, tap → change function, turn → change value.',es:'Tocar → superposición, pulsar → cambiar función, girar → cambiar valor.'}},
+ {q:{ko:'오버레이에서 다른 기능을 고르려면?',en:'How do you pick another function in the overlay?',es:'¿Cómo eliges otra función en la superposición?'},o:[{ko:'크라운을 탭한다',en:'Tap the Crown',es:'Pulsar la Corona'},{ko:'Esc를 누른다',en:'Press Esc',es:'Pulsar Esc'},{ko:'전원을 껐다 켠다',en:'Power cycle',es:'Apagar y encender'},{ko:'F5를 누른다',en:'Press F5',es:'Pulsar F5'}],a:0,e:{ko:'여러 기능이 있으면 탭할 때마다 순서대로 선택돼요.',en:'Each tap cycles through the functions.',es:'Cada pulsación recorre las funciones.'}},
+ {q:{ko:'크라운의 두 가지 촉감 모드는?',en:'What are the Crown’s two tactile modes?',es:'¿Cuáles son los dos modos táctiles de la Corona?'},o:[{ko:'프릭션(부드러움)과 래칫(딸깍)',en:'Friction and ratchet',es:'Fricción y trinquete'},{ko:'진동과 무음',en:'Vibration and silent',es:'Vibración y silencio'},{ko:'유선과 무선',en:'Wired and wireless',es:'Con y sin cable'},{ko:'Win과 Mac',en:'Win and Mac',es:'Win y Mac'}],a:0,e:{ko:'래칫은 한 칸씩 정밀하게, 프릭션은 부드럽고 빠르게 돌아가요.',en:'Ratchet gives step-by-step precision; friction spins smoothly.',es:'El trinquete da precisión paso a paso; la fricción gira suave.'}},
+ {q:{ko:'Easy-Switch로 전환할 수 있는 기기는 최대 몇 대?',en:'How many devices can Easy-Switch handle?',es:'¿Cuántos dispositivos admite Easy-Switch?'},o:[{ko:'1대',en:'1',es:'1'},{ko:'2대',en:'2',es:'2'},{ko:'3대',en:'3',es:'3'},{ko:'6대',en:'6',es:'6'}],a:2,e:{ko:'1·2·3 키로 세 대의 기기를 오가요.',en:'Keys 1·2·3 switch between three devices.',es:'Las teclas 1·2·3 alternan entre tres dispositivos.'}},
+ {q:{ko:'새 기기를 페어링하려면 Easy-Switch 키를…',en:'To pair a new device, you press the Easy-Switch key…',es:'Para emparejar un dispositivo nuevo, la tecla Easy-Switch se…'},o:[{ko:'두 번 빠르게 누른다',en:'twice quickly',es:'pulsa dos veces rápido'},{ko:'길게 누른다',en:'press and hold',es:'mantiene pulsada'},{ko:'Fn과 함께 누른다',en:'with Fn',es:'pulsa con Fn'},{ko:'누르지 않는다',en:'not at all',es:'no se pulsa'}],a:1,e:{ko:'길게 누르면 페어링 모드가 되고 LED가 빠르게 깜박여요.',en:'Holding enters pairing mode and the LED blinks fast.',es:'Al mantenerla entra en modo de emparejamiento y el LED parpadea rápido.'}},
+ {q:{ko:'Mac 레이아웃으로 바꾸는 키 조합은? (3초)',en:'Which combo switches to Mac layout? (3 s)',es:'¿Qué combinación cambia a Mac? (3 s)'},o:[{ko:'Fn + P',en:'Fn + P',es:'Fn + P'},{ko:'Fn + O',en:'Fn + O',es:'Fn + O'},{ko:'Fn + B',en:'Fn + B',es:'Fn + B'},{ko:'Ctrl + Alt',en:'Ctrl + Alt',es:'Ctrl + Alt'}],a:1,e:{ko:'Fn+O = Mac, Fn+P = Windows. 약 3초간 누르세요.',en:'Fn+O = Mac, Fn+P = Windows. Hold about 3 s.',es:'Fn+O = Mac, Fn+P = Windows. Mantén unos 3 s.'}},
+ {q:{ko:'F키를 표준 F1–F12로 바꾸는 방법은?',en:'How do you make the top row act as standard F1–F12?',es:'¿Cómo hacer que la fila superior funcione como F1–F12?'},o:[{ko:'Fn + Esc 또는 Options+ 설정',en:'Fn + Esc or the Options+ setting',es:'Fn + Esc o el ajuste de Options+'},{ko:'Caps Lock 두 번',en:'Caps Lock twice',es:'Bloq Mayús dos veces'},{ko:'크라운 길게 누르기',en:'Hold the Crown',es:'Mantener la Corona'},{ko:'불가능하다',en:'Impossible',es:'Imposible'}],a:0,e:{ko:'Fn+Esc는 Options+의 같은 체크박스와 동기화돼요.',en:'Fn+Esc syncs with the same checkbox in Options+.',es:'Fn+Esc se sincroniza con la casilla de Options+.'}},
+ {q:{ko:'Craft의 무선 연결 방식 두 가지는?',en:'Craft’s two wireless connection methods?',es:'¿Los dos modos de conexión inalámbrica del Craft?'},o:[{ko:'Wi-Fi와 NFC',en:'Wi-Fi and NFC',es:'Wi-Fi y NFC'},{ko:'Unifying 수신기와 Bluetooth LE',en:'Unifying receiver and Bluetooth LE',es:'Receptor Unifying y Bluetooth LE'},{ko:'적외선과 Wi-Fi',en:'Infrared and Wi-Fi',es:'Infrarrojos y Wi-Fi'},{ko:'USB-A만 가능',en:'USB-A only',es:'Solo USB-A'}],a:1,e:{ko:'USB-C는 충전용 케이블이에요.',en:'USB-C is for charging.',es:'USB-C es para cargar.'}},
+ {q:{ko:'충전이 필요하다는 신호는?',en:'What tells you it needs charging?',es:'¿Qué indica que hay que cargar?'},o:[{ko:'배터리 표시등이 빨간색으로 켜진다',en:'The battery LED glows red',es:'El LED de batería se pone rojo'},{ko:'크라운이 진동한다',en:'The Crown vibrates',es:'La Corona vibra'},{ko:'키가 파란색이 된다',en:'Keys turn blue',es:'Las teclas se vuelven azules'},{ko:'신호가 없다',en:'No signal',es:'Ninguna'}],a:0,e:{ko:'빨간 표시등이 보이면 USB-C 케이블로 충전하세요. 한 번 충전으로 약 1주일(크라운·백라이트 사용량에 따라 다름).',en:'When it glows red, charge via USB-C. About a week per charge (varies with Crown/backlight use).',es:'Si se pone rojo, carga por USB-C. Aproximadamente una semana por carga (según uso de Corona y luz).'}},
+ {q:{ko:'손이 다가오면 백라이트를 켜 주는 것은?',en:'What lights the keys as your hands approach?',es:'¿Qué enciende las teclas al acercar las manos?'},o:[{ko:'근접 센서',en:'Proximity sensors',es:'Sensores de proximidad'},{ko:'마이크',en:'Microphone',es:'Micrófono'},{ko:'카메라',en:'Camera',es:'Cámara'},{ko:'GPS',en:'GPS',es:'GPS'}],a:0,e:{ko:'근접 센서가 손을 감지하고, 주변광에 맞춰 밝기가 자동 조절돼요.',en:'Proximity sensors detect hands; brightness adapts to ambient light.',es:'Los sensores detectan las manos y el brillo se adapta a la luz ambiente.'}},
+ {q:{ko:'현재 Craft를 설정할 때 권장되는 앱은?',en:'Which app is recommended for Craft today?',es:'¿Qué app se recomienda hoy para el Craft?'},o:[{ko:'Logitech Options',en:'Logitech Options',es:'Logitech Options'},{ko:'Logi Options+',en:'Logi Options+',es:'Logi Options+'},{ko:'Logitech G HUB',en:'Logitech G HUB',es:'Logitech G HUB'},{ko:'필요 없음',en:'None needed',es:'Ninguna'}],a:1,e:{ko:'Logitech Options는 지원이 종료되어 Options+가 권장돼요.',en:'Logitech Options has reached end of support; Options+ is recommended.',es:'Logitech Options ya no tiene soporte; se recomienda Options+.'}}
+];
+const FAQ=[
+ {q:{ko:'크라운을 돌리면 볼륨만 바뀌어요.',en:'Turning the Crown only changes volume.',es:'Al girar la Corona solo cambia el volumen.'},a:{ko:'Logi Options+를 설치하고 Craft를 선택한 뒤 크라운 설정·앱 프로필을 확인하세요. Adobe 앱은 정품 최신 버전을 쓰는 것이 호환성에 좋아요.',en:'Install Logi Options+, select Craft and check the Crown settings and app profiles. Use genuine, up-to-date Adobe apps for compatibility.',es:'Instala Logi Options+, selecciona Craft y revisa los ajustes de la Corona y los perfiles. Usa apps de Adobe originales y actualizadas.'}},
+ {q:{ko:'Windows 키와 Alt 키가 바뀌어 동작해요.',en:'The Windows and Alt keys act swapped.',es:'Las teclas Windows y Alt están intercambiadas.'},a:{ko:'레이아웃이 Mac으로 바뀐 상태예요. Fn+P를 약 3초 누르면 Windows, Fn+O는 Mac 레이아웃이에요.',en:'The layout is set to Mac. Hold Fn+P ~3 s for Windows; Fn+O for Mac.',es:'La distribución está en Mac. Mantén Fn+P ~3 s para Windows; Fn+O para Mac.'}},
+ {q:{ko:'F5를 눌렀는데 새로고침이 안 되고 바탕화면이 보여요.',en:'F5 shows the desktop instead of refreshing.',es:'F5 muestra el escritorio en vez de recargar.'},a:{ko:'기본값은 스마트 기능키예요. Fn을 누른 채 F5를 누르거나, Fn+Esc(또는 Options+의 "F1–F12를 표준 기능키로 사용")로 바꾸세요.',en:'Smart keys are the default. Hold Fn with F5, or swap with Fn+Esc (or the Options+ checkbox).',es:'Por defecto son teclas inteligentes. Usa Fn+F5 o cambia con Fn+Esc (o la casilla de Options+).'}},
+ {q:{ko:'채널 LED가 계속 깜박이고 입력이 안 돼요.',en:'The channel LED keeps blinking and nothing types.',es:'El LED del canal parpadea y no escribe.'},a:{ko:'그 채널에 연결된 기기가 없거나 연결이 끊긴 상태예요. 다른 채널 키를 눌러 LED가 고정되는 채널을 찾고, 없으면 Easy-Switch 키를 길게 눌러 Unifying 수신기나 Bluetooth로 다시 페어링하세요.',en:'That channel has no connection. Try other channel keys until one stays solid; otherwise hold an Easy-Switch key and re-pair via Unifying or Bluetooth.',es:'Ese canal no tiene conexión. Prueba otros canales hasta que el LED quede fijo; si no, mantén una tecla Easy-Switch y vuelve a emparejar.'}},
+ {q:{ko:'백라이트가 잘 안 켜지거나 어두워요.',en:'The backlight is dim or does not come on.',es:'La luz es tenue o no se enciende.'},a:{ko:'주변이 밝으면 자동으로 밝기가 낮아질 수 있어요. F7(◐+)로 단계를 올리고, 배터리도 확인하세요.',en:'In bright rooms brightness adapts down automatically. Raise it with F7 (◐+) and check the battery.',es:'Con mucha luz el brillo baja automáticamente. Súbelo con F7 (◐+) y revisa la batería.'}},
+ {q:{ko:'배터리는 얼마나 가요?',en:'How long does the battery last?',es:'¿Cuánto dura la batería?'},a:{ko:'공식 안내 기준 약 1주일이에요(크라운·백라이트 사용량에 따라 달라짐). 배터리 표시등이 빨간색이면 USB-C로 충전하세요.',en:'About a week per Logitech (varies with Crown and backlight use). Charge via USB-C when the LED glows red.',es:'Aproximadamente una semana según Logitech (varía con el uso). Carga por USB-C cuando el LED se ponga rojo.'}},
+ {q:{ko:'마우스로 컴퓨터 두 대를 오가며 쓰고 싶어요.',en:'I want to move between two computers with my mouse.',es:'Quiero pasar entre dos ordenadores con el ratón.'},a:{ko:'Logitech Flow를 지원하는 마우스와 함께 쓰면, 화면 끝으로 마우스를 옮길 때 키보드도 함께 넘어가요. (Options+에서 설정)',en:'With a Flow-enabled mouse, moving the pointer to the screen edge brings the keyboard along (set up in Options+).',es:'Con un ratón compatible con Flow, al llevar el puntero al borde el teclado también cambia (en Options+).'}}
+];
+const PROMPTS=[
+ {ko:'나는 Photoshop에서 주로 사진 보정과 브러시 작업을 해. 로지텍 크래프트의 크라운과 F키를 Logi Options+에서 어떻게 설정하면 좋을지 표로 정리해 줘.',en:'I mostly retouch photos and paint with brushes in Photoshop. Put together a table of how to set up the Logitech Craft Crown and F-keys in Logi Options+.',es:'Sobre todo retoco fotos y pinto con pinceles en Photoshop. Hazme una tabla de cómo configurar la Corona y las teclas F del Logitech Craft en Logi Options+.'},
+ {ko:'온라인 강의를 녹화·편집할 때 쓸 수 있게, 크래프트 F1–F12에 어떤 기능과 단축키를 넣으면 좋을지 추천해 줘. (Windows, Premiere Pro, OBS 사용)',en:'Recommend what to put on the Craft F1–F12 keys for recording and editing online lessons (Windows, Premiere Pro, OBS).',es:'Recomiéndame qué asignar a F1–F12 del Craft para grabar y editar clases online (Windows, Premiere Pro, OBS).'},
+ {ko:'Windows 노트북과 MacBook을 Easy-Switch 1·2번에 연결해서 같이 쓸 때 주의할 점과 Fn+O/Fn+P 사용법을 초보자용 체크리스트로 만들어 줘.',en:'Make a beginner checklist for using a Windows laptop and a MacBook on Easy-Switch 1 and 2, including Fn+O / Fn+P.',es:'Haz una lista para principiantes sobre usar un portátil Windows y un MacBook en Easy-Switch 1 y 2, incluido Fn+O / Fn+P.'}
+];
+const PARTS=[
+ {n:{ko:'크라운 (Crown)',en:'Crown',es:'Corona'},d:{ko:'터치·탭·돌리기로 앱마다 다른 기능을 조절하는 알루미늄 다이얼',en:'Aluminium dial — touch, tap and turn to control app-specific functions',es:'Dial de aluminio: toca, pulsa y gira para controlar funciones de cada app'},hl:['crown']},
+ {n:{ko:'Easy-Switch 1·2·3',en:'Easy-Switch 1·2·3',es:'Easy-Switch 1·2·3'},d:{ko:'세 대의 기기를 버튼 하나로 전환, 길게 누르면 페어링',en:'Switch between three devices; hold to pair',es:'Cambia entre tres dispositivos; mantén para emparejar'},hl:['ES1','ES2','ES3']},
+ {n:{ko:'스마트 F키',en:'Smart F-keys',es:'Teclas F inteligentes'},d:{ko:'밝기·작업 보기·백라이트·미디어·볼륨. Options+에서 바꿀 수 있음',en:'Brightness, Task View, backlight, media, volume — customizable in Options+',es:'Brillo, vista de tareas, luz, multimedia, volumen; personalizables'},hl:['F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12','VolUp']},
+ {n:{ko:'듀얼 OS 키',en:'Dual-OS keys',es:'Teclas doble SO'},d:{ko:'Windows/Mac 표기가 함께 인쇄된 수정키. Fn+P / Fn+O로 전환',en:'Modifiers printed for both Windows and Mac; switch with Fn+P / Fn+O',es:'Modificadores para Windows y Mac; cambia con Fn+P / Fn+O'},hl:['OSL','ALTL','ALTR','OSR','Fn']},
+ {n:{ko:'스마트 백라이트',en:'Smart backlight',es:'Luz inteligente'},d:{ko:'근접 센서가 손을 감지하면 켜지고, 주변 밝기에 맞춰 자동 조절',en:'Proximity sensors wake it; brightness adapts to room light',es:'Se enciende al detectar las manos y se adapta a la luz'},hl:['F6','F7']},
+ {n:{ko:'표시등',en:'Indicators',es:'Indicadores'},d:{ko:'채널 표시등 3개, Caps Lock 표시등, 배터리 표시등',en:'3 channel lights, Caps Lock light, battery light',es:'3 luces de canal, Bloq Mayús y batería'},hl:['CapsLock','ES1','ES2','ES3','batt']},
+ {n:{ko:'전원 스위치 & USB-C',en:'Power switch & USB-C',es:'Interruptor y USB-C'},d:{ko:'뒷면 전원 스위치, USB-C 충전 (약 1주일 사용)',en:'Power switch on the back, USB-C charging (about a week)',es:'Interruptor trasero, carga USB-C (aprox. una semana)'},hl:['power']},
+ {n:{ko:'Unifying / Bluetooth',en:'Unifying / Bluetooth',es:'Unifying / Bluetooth'},d:{ko:'Unifying 수신기 또는 Bluetooth LE로 무선 연결 (최대 약 10m)',en:'Wireless via Unifying receiver or Bluetooth LE (up to ~10 m)',es:'Inalámbrico por receptor Unifying o Bluetooth LE (hasta ~10 m)'},hl:['ES1']}
+];
+const ORDER=[{ko:'개요에서 구성 익히기',en:'Learn the parts in Overview',es:'Conoce las partes en Inicio'},{ko:'크라운: 터치 → 탭 → 돌리기',en:'Crown: touch → tap → turn',es:'Corona: tocar → pulsar → girar'},{ko:'키보드: F키·Fn·Easy-Switch·백라이트',en:'Keyboard: F-keys, Fn, Easy-Switch, backlight',es:'Teclado: teclas F, Fn, Easy-Switch, luz'},{ko:'Options+: 나만의 설정 만들기',en:'Options+: make it yours',es:'Options+: personalízalo'},{ko:'실전 연습 → 미션 → 퀴즈',en:'Real practice → missions → quiz',es:'Práctica real → misiones → quiz'}];
+const SETUP=[{ko:'app.logi.com에서 Logi Options+ 설치',en:'Install Logi Options+ from app.logi.com',es:'Instala Logi Options+ desde app.logi.com'},{ko:'Craft 전원 켜기',en:'Turn on the Craft',es:'Enciende el Craft'},{ko:'Easy-Switch 키 중 하나를 길게 눌러 페어링 모드',en:'Hold an Easy-Switch key to enter pairing mode',es:'Mantén una tecla Easy-Switch para emparejar'},{ko:'Unifying 수신기 또는 Bluetooth로 연결',en:'Connect via Unifying receiver or Bluetooth',es:'Conecta por receptor Unifying o Bluetooth'},{ko:'Options+에서 Craft 선택 → 크라운·F키 설정',en:'Select Craft in Options+ → set up Crown and F-keys',es:'Elige Craft en Options+ → ajusta Corona y teclas F'}];
+const FACTS=[{ko:'🎛️ 크라운 다이얼',en:'🎛️ Crown dial',es:'🎛️ Dial Corona'},{ko:'🔁 기기 3대 전환',en:'🔁 3 devices',es:'🔁 3 dispositivos'},{ko:'💡 근접·조도 센서 백라이트',en:'💡 Proximity & ambient backlight',es:'💡 Luz con sensores'},{ko:'🔋 USB-C 충전 · 약 1주일',en:'🔋 USB-C · about 1 week',es:'🔋 USB-C · aprox. 1 semana'},{ko:'🪟🍎 Windows · Mac',en:'🪟🍎 Windows · Mac',es:'🪟🍎 Windows · Mac'},{ko:'📶 Unifying · Bluetooth LE',en:'📶 Unifying · Bluetooth LE',es:'📶 Unifying · Bluetooth LE'}];
+const DRILL=[
+ {k:'C',d:{ko:'복사',en:'Copy',es:'Copiar'}},{k:'V',d:{ko:'붙여넣기',en:'Paste',es:'Pegar'}},{k:'X',d:{ko:'잘라내기',en:'Cut',es:'Cortar'}},
+ {k:'Z',d:{ko:'실행 취소',en:'Undo',es:'Deshacer'}},{k:'A',d:{ko:'모두 선택',en:'Select all',es:'Seleccionar todo'}},{k:'S',d:{ko:'저장',en:'Save',es:'Guardar'}},
+ {k:'F',d:{ko:'찾기',en:'Find',es:'Buscar'}},{k:'B',d:{ko:'굵게',en:'Bold',es:'Negrita'}},{k:'I',d:{ko:'기울임꼴',en:'Italic',es:'Cursiva'}},
+ {k:'U',d:{ko:'밑줄',en:'Underline',es:'Subrayado'}},{k:'P',d:{ko:'인쇄',en:'Print',es:'Imprimir'}},{k:'Z',sh:1,d:{ko:'다시 실행 (Mac 방식)',en:'Redo (Mac style)',es:'Rehacer (estilo Mac)'},macOnly:1},{k:'Y',d:{ko:'다시 실행',en:'Redo',es:'Rehacer'},winOnly:1}
+];
+const SENT={
+ ko:['크라운을 터치하고 탭한 다음 천천히 돌려 보세요.','로지텍 크래프트는 세 대의 기기를 오가며 쓸 수 있습니다.','손을 가까이 가져가면 키보드에 불이 들어와요.','오늘도 다인에듀와 함께 즐겁게 공부해요!'],
+ en:['Touch the Crown, tap it, then turn it slowly.','The Logitech Craft can switch between three devices.','The keys light up as your hands get close.','Practice makes progress, one key at a time.'],
+ es:['Toca la Corona, púlsala y luego gírala despacio.','El Logitech Craft puede cambiar entre tres dispositivos.','Las teclas se iluminan cuando acercas las manos.','La práctica hace al maestro, tecla a tecla.']
+};
+
+/* =========================================================
+   Tabs / i18n
+   ========================================================= */
+const SECS=['home','crown','keys','options','real','missions','quiz','help'];
+function renderTabs(){ $('#tabs').innerHTML=SECS.map(s=>`<button data-sec="${s}" class="${S.sec===s?'on':''}">${t('tab_'+s)}</button>`).join(''); }
+function goSec(s,opts){ S.sec=s; $$('.sec').forEach(e=>e.classList.toggle('on',e.id==='sec-'+s)); renderTabs(); if(opts&&opts.app){S.crown.app=opts.app;S.crown.fi=0;renderCrownAll();} if(opts&&opts.sub){S.sub=opts.sub;renderSub();} window.scrollTo({top:0,behavior:'smooth'}); setTimeout(sizeKB,30); try{history.replaceState(null,'','#'+s);}catch(e){} }
+function applyI18n(){
+  document.documentElement.lang=S.lang;
+  $$('[data-i18n]').forEach(e=>{const v=t(e.dataset.i18n); if(e.dataset.i18n==='heroTitle'){e.innerHTML=v.replace(/\n/g,'<br>');} else e.textContent=v;});
+  $$('[data-i18n-html]').forEach(e=>e.innerHTML=t(e.dataset.i18nHtml));
+  $$('[data-i18n-ph]').forEach(e=>e.placeholder=t(e.dataset.i18nPh));
+  $$('.langs button').forEach(b=>b.classList.toggle('on',b.dataset.lang===S.lang));
+  renderTabs(); renderHome(); renderCrownAll(); refreshKeys(); renderKeysSide(); renderOptions(); renderSubtabs(); renderDrill(); renderTyping(true); renderMissions(); renderQuiz(); renderHelp(); renderPC(); updateProgress(); updateHoldBtn(); updateTesterCount();
+}
+
+/* =========================================================
+   Home
+   ========================================================= */
+function renderHome(){
+  $('#facts').innerHTML=FACTS.map(f=>`<span class="pill">${tt(f)}</span>`).join('');
+  $('#parts').innerHTML=PARTS.map((p,i)=>`<div class="card part" data-part="${i}"><h3><span class="n">${i+1}</span>${tt(p.n)}</h3><div class="muted" style="font-size:13.5px">${tt(p.d)}</div></div>`).join('');
+  $('#order').innerHTML=ORDER.map(o=>`<li>${tt(o)}</li>`).join('');
+  $('#setup').innerHTML=SETUP.map(o=>`<li>${tt(o)}</li>`).join('');
+}
+function highlightPart(i){
+  goSec('keys');
+  setTimeout(()=>{ const kb=$('#kbSim .kb'); PARTS[i].hl.forEach(id=>{
+    let el; if(id==='crown') el=$('.crown',kb); else if(id==='batt') el=$('.battLed',kb); else if(id==='power') el=$('#tPower').closest('.sw'); else el=$(`.key[data-id="${id}"]`,kb);
+    if(el){el.classList.remove('hl'); void el.offsetWidth; el.classList.add('hl'); el.style.outline='2px solid var(--acc2)'; setTimeout(()=>{el.style.outline='';el.classList.remove('hl');},3200);}
+  }); toast(tt(PARTS[i].n)+' — '+tt(PARTS[i].d)); },250);
+}
+
+/* =========================================================
+   Keyboard model
+   ========================================================= */
+const KB=[];
+function k(id,x,y,w,h,code,kind,extra){KB.push(Object.assign({id,x,y,w:w||1,h:h||1,code,kind:kind||'std'},extra||{}));}
+(function build(){
+  k('Esc',0,0,1,1,'Escape','sys',{lbl:'esc'});
+  const FX=[1.25,2.25,3.25,4.25,5.5,6.5,7.5,8.5,9.75,10.75,11.75,12.75];
+  FX.forEach((x,i)=>k('F'+(i+1),x,0,1,1,'F'+(i+1),'fkey'));
+  k('VolUp',14,0,1,1,'AudioVolumeUp','fkey');
+  ['ES1','ES2','ES3'].forEach((id,i)=>k(id,15.5+i,0,1,1,null,'es',{lbl:String(i+1)}));
+  [['Calc','LaunchApp2'],['PrtSc','PrintScreen'],['ScrLk','ScrollLock'],['Lock',null]].forEach((a,i)=>k(a[0],19+i,0,1,1,a[1],'fkey'));
+  const r1='`~1!2@3#4$5%6^7&8*9(0)-_=+'; const c1=['Backquote','Digit1','Digit2','Digit3','Digit4','Digit5','Digit6','Digit7','Digit8','Digit9','Digit0','Minus','Equal'];
+  c1.forEach((c,i)=>k(c,i,1.5,1,1,c,'sym',{ch:r1[i*2],sh:r1[i*2+1]}));
+  k('Backspace',13,1.5,2,1,'Backspace','mod',{lbl:'⌫ backspace'});
+  k('Tab',0,2.5,1.5,1,'Tab','mod',{lbl:'tab ⇥'});
+  'qwertyuiop'.split('').forEach((c,i)=>k('Key'+c.toUpperCase(),1.5+i,2.5,1,1,'Key'+c.toUpperCase(),'std',{ch:c,sh:c.toUpperCase()}));
+  k('BracketLeft',11.5,2.5,1,1,'BracketLeft','sym',{ch:'[',sh:'{'}); k('BracketRight',12.5,2.5,1,1,'BracketRight','sym',{ch:']',sh:'}'});
+  k('Backslash',13.5,2.5,1.5,1,'Backslash','sym',{ch:'\\',sh:'|'});
+  k('CapsLock',0,3.5,1.75,1,'CapsLock','caps',{lbl:'caps lock'});
+  'asdfghjkl'.split('').forEach((c,i)=>k('Key'+c.toUpperCase(),1.75+i,3.5,1,1,'Key'+c.toUpperCase(),'std',{ch:c,sh:c.toUpperCase()}));
+  k('Semicolon',10.75,3.5,1,1,'Semicolon','sym',{ch:';',sh:':'}); k('Quote',11.75,3.5,1,1,'Quote','sym',{ch:"'",sh:'"'});
+  k('Enter',12.75,3.5,2.25,1,'Enter','mod',{lbl:'enter ↵'});
+  k('ShiftLeft',0,4.5,2.25,1,'ShiftLeft','mod',{lbl:'⇧ shift'});
+  'zxcvbnm'.split('').forEach((c,i)=>k('Key'+c.toUpperCase(),2.25+i,4.5,1,1,'Key'+c.toUpperCase(),'std',{ch:c,sh:c.toUpperCase()}));
+  k('Comma',9.25,4.5,1,1,'Comma','sym',{ch:',',sh:'<'}); k('Period',10.25,4.5,1,1,'Period','sym',{ch:'.',sh:'>'}); k('Slash',11.25,4.5,1,1,'Slash','sym',{ch:'/',sh:'?'});
+  k('ShiftRight',12.25,4.5,2.75,1,'ShiftRight','mod',{lbl:'⇧ shift'});
+  k('ControlLeft',0,5.5,1.25,1,'ControlLeft','mod',{lbl:'ctrl'});
+  k('OSL',1.25,5.5,1.25,1,null,'os'); k('ALTL',2.5,5.5,1.25,1,null,'os');
+  k('Space',3.75,5.5,6.25,1,'Space','mod',{lbl:''});
+  k('ALTR',10,5.5,1.25,1,null,'os'); k('Fn',11.25,5.5,1.25,1,null,'fn',{lbl:'fn'}); k('OSR',12.5,5.5,1.25,1,null,'os');
+  k('ControlRight',13.75,5.5,1.25,1,'ControlRight','mod',{lbl:'ctrl'});
+  [['Insert','insert'],['Home','home'],['PageUp','pg up']].forEach((a,i)=>k(a[0],15.5+i,1.5,1,1,a[0],'nav',{lbl:a[1]}));
+  [['Delete','delete'],['End','end'],['PageDown','pg dn']].forEach((a,i)=>k(a[0],15.5+i,2.5,1,1,a[0],'nav',{lbl:a[1]}));
+  k('ArrowUp',16.5,4.5,1,1,'ArrowUp','nav',{lbl:'↑'}); k('ArrowLeft',15.5,5.5,1,1,'ArrowLeft','nav',{lbl:'←'}); k('ArrowDown',16.5,5.5,1,1,'ArrowDown','nav',{lbl:'↓'}); k('ArrowRight',17.5,5.5,1,1,'ArrowRight','nav',{lbl:'→'});
+  [['NumLock','clear'],['NumpadDivide','/'],['NumpadMultiply','*'],['NumpadSubtract','−']].forEach((a,i)=>k(a[0],19+i,1.5,1,1,a[0],'num',{lbl:a[1],ch:a[0]==='NumLock'?'':a[1].replace('−','-')}));
+  [['7','8','9'],['4','5','6'],['1','2','3']].forEach((r,ri)=>r.forEach((n,i)=>k('Numpad'+n,19+i,2.5+ri,1,1,'Numpad'+n,'num',{lbl:n,ch:n})));
+  k('NumpadAdd',22,2.5,1,2,'NumpadAdd','num',{lbl:'+',ch:'+'}); k('NumpadEnter',22,4.5,1,2,'NumpadEnter','num',{lbl:'enter'});
+  k('Numpad0',19,5.5,2,1,'Numpad0','num',{lbl:'0',ch:'0'}); k('NumpadDecimal',21,5.5,1,1,'NumpadDecimal','num',{lbl:'.',ch:'.'});
+})();
+const KBI=Object.fromEntries(KB.map(x=>[x.id,x]));
+function osLbl(id,os){
+  const W={OSL:['⊞','start'],ALTL:['alt',''],ALTR:['alt',''],OSR:['≣','menu']}, M={OSL:['⌥','opt'],ALTL:['⌘','cmd'],ALTR:['⌘','cmd'],OSR:['⌥','opt']};
+  const a=(os==='mac'?M:W)[id], b=(os==='mac'?W:M)[id];
+  return `<span class="m">${a[0]} ${a[1]}</span><span class="s">${b[0]} ${b[1]}</span>`;
+}
+function keyInner(x,mode){
+  if(x.kind==='fkey'){
+    const a=ACTS[fAct(x.id)]; const isF=/^F\d+$/.test(x.id);
+    if(isF && S.fnStd && mode==='sim') return `<span class="m">${x.id}</span><span class="fl">${a.i}</span>`;
+    return `<span class="ic">${a.i}</span>${isF?`<span class="fl">${x.id}</span>`:''}`;
+  }
+  if(x.kind==='es') return `<span class="m">${x.lbl}</span><i class="kled" data-led="${x.id}"></i>`;
+  if(x.kind==='caps') return `<span class="m" style="font-size:calc(var(--u)*.2)">caps lock</span><i class="kled" data-led="caps"></i>`;
+  if(x.kind==='os') return osLbl(x.id,S.os);
+  if(x.kind==='sym') return `<span class="s">${x.sh}</span><span class="m">${x.ch}</span>`;
+  if(x.kind==='std') return `<span class="m">${x.sh}</span>`;
+  return `<span class="m" style="font-size:calc(var(--u)*.22)">${x.lbl}</span>`;
+}
+function renderKB(host,mode){
+  host.innerHTML=`<div class="kb" data-mode="${mode}"><div class="kbTop">
+    <div class="crown small" data-ctx="global" tabindex="0" aria-label="Crown"><div class="knurl"></div><div class="cap"></div></div>
+    <i class="led battLed" style="left:calc(var(--u)*2.1);top:calc(var(--u)*.7)"></i><span class="ledLbl" style="left:calc(var(--u)*2.4);top:calc(var(--u)*.6)">${t('battery')}</span>
+    <div class="prox"><i></i><span>${t('handNear')}</span></div>
+    <span class="brandTxt">logitech · CRAFT</span></div><div class="keys"></div></div>`;
+  const kb=$('.kb',host); refreshKeys(kb); bindCrown($('.crown',kb));
+  if(mode==='sim'){
+    const keys=$('.keys',kb);
+    keys.addEventListener('pointerdown',e=>{const el=e.target.closest('.key'); if(!el) return; e.preventDefault(); keyDown(el.dataset.id,el);});
+    kb.addEventListener('pointerenter',()=>setHand(true)); kb.addEventListener('pointermove',()=>setHand(true)); kb.addEventListener('pointerleave',()=>setHand(false));
+  }
+}
+function refreshKeys(kb){
+  const list=kb?[kb]:$$('.kb');
+  list.forEach(kbEl=>{ const mode=kbEl.dataset.mode; const keys=$('.keys',kbEl);
+    keys.innerHTML=KB.map(x=>`<div class="key ${x.kind}${mode==='test'&&S.stats.tested[x.id]?' tested':''}" data-id="${x.id}" style="--x:${x.x};--y:${x.y};--w:${x.w};--h:${x.h}">${keyInner(x,mode)}</div>`).join('');
+    const bl=$('.battLed',kbEl); if(bl) bl.nextElementSibling.textContent=t('battery');
+    const pr=$('.prox span',kbEl); if(pr) pr.textContent=t('handNear');
+  });
+  updateKBState();
+}
+function sizeKB(){ $$('.kbHost').forEach(h=>{ const kb=$('.kb',h); if(!kb||!h.clientWidth) return; const u=clamp((h.clientWidth-8)/23.75,13,40); kb.style.setProperty('--u',u+'px'); }); }
+window.addEventListener('resize',sizeKB);
+
+/* backlight & leds */
+let handT;
+function setHand(on){ if(on){ clearTimeout(handT); if(!S.hand){S.hand=true;updateKBState();} } else { clearTimeout(handT); handT=setTimeout(()=>{S.hand=false;updateKBState();},2500);} }
+function effBl(){ if(!S.power||S.battery<=0) return 0; const base=S.bl/8; if(!S.autoBl) return base; if(!S.hand) return 0; return clamp(base*(1.15-S.ambient/100),0,1); }
+function updateKBState(){
+  const kb=$('#kbSim .kb'); if(kb){
+    kb.style.setProperty('--bl',effBl().toFixed(2)); kb.classList.toggle('off',!S.power||S.battery<=0);
+    $('.prox',kb).classList.toggle('on',S.hand&&S.power);
+    $('.battLed',kb).classList.toggle('red',S.power&&S.battery<=10&&S.battery>0);
+    ['ES1','ES2','ES3'].forEach((id,i)=>{ const n=i+1, led=$(`[data-led="${id}"]`,kb); if(!led) return; led.className='kled';
+      if(!S.power||S.battery<=0) return;
+      if(S.pairing===n) led.classList.add('blinkFast'); else if(S.ch===n) led.classList.add(S.chans[n].dev?'on':'blinkSlow'); });
+    const cl=$('[data-led="caps"]',kb); if(cl) cl.classList.toggle('on',S.caps&&S.power);
+    const fn=$('.key[data-id="Fn"]',kb); if(fn) fn.classList.toggle('latched',S.fnLatch);
+    ['ShiftLeft','ShiftRight'].forEach(id=>{const e=$(`.key[data-id="${id}"]`,kb); if(e) e.classList.toggle('latched',S.shift);});
+  }
+  const tk=$('#kbTest .kb'); if(tk) tk.style.setProperty('--bl','.75');
+  if($('#battVal')) $('#battVal').textContent=Math.round(S.battery)+'%'+(S.charging?' ⚡':'');
+  if($('#ambVal')) $('#ambVal').textContent=S.ambient+'%';
+  if($('#osVal')) $('#osVal').textContent=S.os==='mac'?'macOS':'Windows';
+}
+
+/* key handling (sim) */
+let hold=null;
+function keyDown(id,el){
+  el.classList.add('down');
+  const x=KBI[id];
+  if(x.kind==='es' && S.power && S.battery>0){
+    const n=+id.slice(2); el.classList.add('holding');
+    hold={id,fired:false,timer:setTimeout(()=>{hold.fired=true;startPairing(n);},3000)}; return;
+  }
+  if(S.fnLatch && (id==='KeyO'||id==='KeyP') && S.power && S.battery>0){
+    el.classList.add('holding');
+    hold={id,fired:false,timer:setTimeout(()=>{hold.fired=true; setOS(id==='KeyO'?'mac':'win',true); S.fnLatch=false; updateKBState();},3000)}; return;
+  }
+  hold={id,fired:false,timer:null};
+}
+document.addEventListener('pointerup',()=>{
+  $$('.key.down,.key.holding').forEach(e=>e.classList.remove('down','holding'));
+  if(!hold) return; const h=hold; hold=null; clearTimeout(h.timer);
+  if(h.fired) return;
+  const x=KBI[h.id];
+  if(x.kind==='es'){ switchChannel(+h.id.slice(2)); return; }
+  if(S.fnLatch && (h.id==='KeyO'||h.id==='KeyP')){ toast(t('holdMore')); S.fnLatch=false; updateKBState(); return; }
+  handleKey(h.id);
+});
+function alive(){ if(!S.power){toast(t('powerOff'));return false;} if(S.battery<=0){toast(t('battDead'));return false;} return true; }
+function handleKey(id){
+  if(!alive()) return;
+  setHand(true); setHand(false);
+  const x=KBI[id];
+  if(id==='Fn'){ S.fnLatch=!S.fnLatch; updateKBState(); return; }
+  if(S.fnLatch){
+    S.fnLatch=false;
+    if(id==='Esc'){ setFnStd(!S.fnStd); mark('fnesc'); toast('Fn+Esc → '+(S.fnStd?t('fnStdOn'):t('fnStdOff'))); updateKBState(); return; }
+    if(id==='KeyB'){ toast(t('pauseBreak')); updateKBState(); return; }
+    if(/^F\d+$/.test(id)){ if(S.fnStd) doAction(fAct(id),id); else toast(t('stdKey',{k:id})); updateKBState(); return; }
+    updateKBState();
+  }
+  if(/^F\d+$/.test(id)){ if(S.fnStd) toast(t('stdKey',{k:id})); else doAction(fAct(id),id); return; }
+  if(x.kind==='fkey'){ doAction(fAct(id),id); return; }
+  if(id==='CapsLock'){ S.caps=!S.caps; updateKBState(); return; }
+  if(id==='ShiftLeft'||id==='ShiftRight'){ S.shift=!S.shift; updateKBState(); return; }
+  const pc=S.pc;
+  if(id==='Backspace'){ pc.typed=pc.typed.slice(0,-1); }
+  else if(id==='Space'){ pc.typed+=' '; }
+  else if(id==='Enter'||id==='NumpadEnter'){ pc.typed=''; }
+  else if(x.ch!==undefined && x.ch!==''){ let c=x.ch; if(x.kind==='std'){ const up=S.caps!==S.shift; c=up?x.sh:x.ch; } else if(S.shift && x.sh) c=x.sh; pc.typed=(pc.typed+c).slice(-60); if(S.shift){S.shift=false;updateKBState();} }
+  else return;
+  renderPC();
+}
+function setFnStd(v){ S.fnStd=v; save(); refreshKeys(); renderOptions(); renderKeysSide(); }
+function setOS(o,viaFn){ S.os=o; if(S.chans[S.ch].dev && viaFn){} refreshKeys(); renderKeysSide(); toast(t('osSet',{o:o==='mac'?'macOS':'Windows'})); if(viaFn&&o==='mac') mark('fno'); const kb=$('#kbSim .kb'); const led=kb&&$(`[data-led="ES${S.ch}"]`,kb); if(led){led.className='kled blinkFast'; setTimeout(updateKBState,1200);} }
+function switchChannel(n){
+  if(!alive()) return;
+  S.pairing=null; $('#pairBox').classList.remove('show');
+  const prev=S.ch; S.ch=n; const d=S.chans[n].dev;
+  if(d){ S.os=DEVICES[d].os; toast(t('chTo',{n,d:tt(DEVICES[d].n)})); refreshKeys(); }
+  else toast(t('noDevice',{n}));
+  if(prev!==n) mark('swch');
+  updateKBState(); renderKeysSide(); renderOptions(); renderPC();
+}
+function startPairing(n){
+  S.pairing=n; S.ch=n; updateKBState();
+  $('#pairMsg').textContent=t('pairing',{n});
+  $('#pairDevs').innerHTML=Object.keys(DEVICES).map(d=>`<button class="btn sm" data-pair="${d}">${tt(DEVICES[d].n)} · ${DEVICES[d].via}</button>`).join('');
+  $('#pairBox').classList.add('show'); toast(t('pairing',{n}).split('!')[0]+'!');
+}
+function completePair(d){
+  const n=S.pairing; if(!n) return;
+  Object.keys(S.chans).forEach(c=>{ if(S.chans[c].dev===d && +c!==n) S.chans[c].dev=null; });
+  S.chans[n].dev=d; S.pairing=null; S.os=DEVICES[d].os; $('#pairBox').classList.remove('show');
+  toast('✅ '+t('chTo',{n,d:tt(DEVICES[d].n)}));
+  if(n===2) mark('pair2');
+  refreshKeys(); renderKeysSide(); renderOptions(); renderPC();
+}
+
+/* =========================================================
+   PC mock
+   ========================================================= */
+function pcHTML(){ return `<div class="pc"><div class="scr"><div class="wall"></div><div class="deskLbl"></div>
+ <div class="wins">${WINS.map((w,i)=>`<div class="win" data-w="${i}"><b>${w}</b><i></i></div>`).join('')}</div>
+ <div class="typed"></div><div class="layer"></div>
+ <div class="hud"><span class="hi"></span><div class="hb"><i></i></div><span class="hv"></span></div>
+ <div class="bar"><span class="st"></span><span class="media"></span><span class="sp"></span><span class="ch"></span><span class="vol"></span><span class="clk"></span></div>
+ <div class="dim"></div></div></div>`; }
+let layerKind=null, layerT=null, hudT=null;
+function showLayer(kind,ms){ layerKind=kind; clearTimeout(layerT); if(ms) layerT=setTimeout(()=>{ if(layerKind===kind){layerKind=null;renderPC();} },ms); renderPC(); }
+function showHud(icon,pct,label){ $$('.pc .hud').forEach(h=>{ $('.hi',h).textContent=icon; $('.hb i',h).style.width=clamp(pct,0,100)+'%'; $('.hv',h).textContent=label; h.classList.add('show'); }); clearTimeout(hudT); hudT=setTimeout(()=>$$('.pc .hud').forEach(h=>h.classList.remove('show')),1300); }
+function layerHTML(){
+  const pc=S.pc;
+  switch(layerKind){
+    case 'taskview': return `<div class="ly-panel" style="width:86%"><div style="margin-bottom:6px">${S.os==='mac'?'Mission Control':tt(ACTS.taskView.n)}</div><div class="row" style="gap:6px">${WINS.map((w,i)=>`<div style="flex:1;background:${i===pc.appIdx?'#4fd1c5':'#3a404b'};color:${i===pc.appIdx?'#000':'#fff'};border-radius:6px;padding:14px 4px;text-align:center">${w}</div>`).join('')}</div></div>`;
+    case 'action': return `<div class="ly-panel ly-right"><b>${tt(ACTS.actionCenter.n)}</b><div style="margin-top:6px;display:grid;gap:4px"><div>📶 Wi-Fi</div><div>🔵 Bluetooth</div><div>🌙 Focus</div><div>☼ ${pc.bright}%</div><div>🔊 ${Math.round(pc.vol)}%</div></div></div>`;
+    case 'calc': return `<div class="ly-panel"><div style="margin-bottom:4px">🧮 ${tt(ACTS.calc.n)}</div><div class="calc"><div class="d">0</div>${'789÷456×123−0.=+'.split('').map(c=>`<span>${c}</span>`).join('')}</div></div>`;
+    case 'ring': return `<div class="ring">${['🎨','📁','🔍','✂️','📋','⚙️'].map((e,i)=>{const a=i/6*Math.PI*2-Math.PI/2;return `<span style="left:${50+36*Math.cos(a)}%;top:${50+36*Math.sin(a)}%">${e}</span>`;}).join('')}<span style="left:50%;top:50%;font-size:11px">Actions<br>Ring</span></div>`;
+    case 'switcher': return `<div class="ly-panel"><div class="row" style="gap:6px">${WINS.map((w,i)=>`<div style="padding:10px 12px;border-radius:6px;background:${i===pc.appIdx?'#4fd1c5':'#3a404b'};color:${i===pc.appIdx?'#000':'#fff'}">${w}</div>`).join('')}</div></div>`;
+    case 'desk': return `<div class="ly-panel" style="font-size:16px">${t('desk')} ${pc.desk} / 4</div>`;
+    case 'shot': return `<div class="flash"></div><div class="ly-panel" style="position:absolute;bottom:20%">${t('shotSaved')}</div>`;
+    case 'crown': return `<div class="ly-panel" style="position:absolute;left:8px;top:8px;min-width:46%">${overlayHTML('global')}</div>`;
+    case 'msg': return `<div class="ly-panel">${layerMsg}</div>`;
+  }
+  return '';
+}
+let layerMsg='';
+function renderPC(){
+  const pc=S.pc;
+  $$('.pc').forEach(el=>{
+    const scr=$('.scr',el);
+    $('.dim',el).style.opacity=((100-pc.bright)/100*.8).toFixed(2);
+    const w=$('.wins',el); w.classList.toggle('hide',pc.hideWins); w.classList.toggle('expose',pc.expose); w.style.transform=`scale(${pc.zoom/100})`;
+    $$('.win',el).forEach((x,i)=>{x.classList.toggle('act',i===pc.appIdx);});
+    $('.win[data-w="0"] i',el).textContent=pc.typed||'Lorem ipsum…';
+    $('.win[data-w="2"] i',el).textContent=(pc.playing?'▶ ':'⏸ ')+TRACKS[pc.track];
+    $('.deskLbl',el).textContent=t('desk')+' '+pc.desk+(S.scroll?' · ScrLk':'');
+    const ty=$('.typed',el); ty.classList.toggle('show',!!pc.typed); ty.textContent=t('typedHint')+pc.typed;
+    $('.st',el).textContent=S.os==='mac'?'':'⊞';
+    $('.media',el).textContent=(pc.playing?'▶ ':'⏸ ')+TRACKS[pc.track];
+    const d=S.chans[S.ch].dev; $('.ch',el).textContent='⌨ '+t('channel')+' '+S.ch+(d?'':' ✕');
+    $('.vol',el).textContent=(pc.muted?'🔇 ':'🔊 ')+Math.round(pc.vol);
+    $('.clk',el).textContent=new Date().toTimeString().slice(0,5);
+    const ly=$('.layer',el); const html=layerHTML(); ly.innerHTML=html; ly.classList.toggle('show',!!html);
+    let lk=$('.lockScr',scr);
+    if(pc.locked){ if(!lk){lk=document.createElement('div');lk.className='lockScr';lk.onclick=()=>{S.pc.locked=false;renderPC();};scr.appendChild(lk);} lk.innerHTML=`<div class="clk">${new Date().toTimeString().slice(0,5)}</div><div>${t('locked')}</div>`; }
+    else if(lk) lk.remove();
+    const noconn=!d||!S.power||S.battery<=0; scr.style.filter=noconn?'grayscale(.5)':'';
+  });
+}
+function doAction(aid,src){
+  const pc=S.pc;
+  switch(aid){
+    case 'brDown': pc.bright=clamp(pc.bright-10,10,100); showHud('☼',pc.bright,pc.bright+'%'); break;
+    case 'brUp': pc.bright=clamp(pc.bright+10,10,100); showHud('☼',pc.bright,pc.bright+'%'); break;
+    case 'taskView': pc.hideWins=false; showLayer('taskview',1800); break;
+    case 'actionCenter': showLayer('action',2000); break;
+    case 'showDesktop': pc.hideWins=!pc.hideWins; break;
+    case 'blDown': S.bl=clamp(S.bl-1,0,8); setHand(true); setHand(false); toast('◐ '+S.bl+' / 8'); break;
+    case 'blUp': S.bl=clamp(S.bl+1,0,8); setHand(true); setHand(false); toast('◐ '+S.bl+' / 8'); if(S.bl===8) mark('blmax'); break;
+    case 'prev': pc.track=(pc.track+TRACKS.length-1)%TRACKS.length; pc.playing=true; toast('⏮ '+TRACKS[pc.track]); break;
+    case 'next': pc.track=(pc.track+1)%TRACKS.length; pc.playing=true; toast('⏭ '+TRACKS[pc.track]); break;
+    case 'play': pc.playing=!pc.playing; toast((pc.playing?'▶ ':'⏸ ')+TRACKS[pc.track]); break;
+    case 'mute': pc.muted=!pc.muted; showHud(pc.muted?'🔇':'🔊',pc.muted?0:pc.vol,pc.muted?'Mute':Math.round(pc.vol)+''); if(src==='F11'&&pc.muted) mark('mute'); break;
+    case 'volDown': pc.muted=false; pc.vol=clamp(pc.vol-2,0,100); showHud('🔉',pc.vol,Math.round(pc.vol)+''); break;
+    case 'volUp': pc.muted=false; pc.vol=clamp(pc.vol+2,0,100); showHud('🔊',pc.vol,Math.round(pc.vol)+''); break;
+    case 'calc': showLayer('calc',2200); if(src==='F12') mark('f12calc'); break;
+    case 'prtsc': showLayer('shot',1300); break;
+    case 'scrlk': S.scroll=!S.scroll; toast('⇳ Scroll Lock '+(S.scroll?'ON':'OFF')); break;
+    case 'lock': pc.locked=true; break;
+  }
+  updateKBState(); renderPC();
+}
+
+/* =========================================================
+   Crown
+   ========================================================= */
+const GACC={};
+function curFns(){ return APPS[S.crown.app].fns||[]; }
+function overlayHTML(ctx){
+  const c=S.crown;
+  if(ctx==='global'||c.app==='desktop'){
+    const turnVal=globalVal(S.opt.turn);
+    const items=[[t('turnLbl'),tt(TURN[S.opt.turn]),turnVal,!c.hold],[t('pressLbl'),tt(PRESS[S.opt.press]),'',false],[t('ptLbl'),tt(TURN[S.opt.pt]),globalVal(S.opt.pt),c.hold]];
+    return `<div class="oh"><span>${tt(APPS.desktop.n)}</span><span>Options+</span></div>`+items.map(i=>`<div class="it ${i[3]?'on':''}"><span>${i[0]}: ${i[1]}</span><b>${i[2]}</b></div>`).join('');
+  }
+  const fns=curFns();
+  return `<div class="oh"><span>${tt(APPS[c.app].n)}</span><span>${t('touchTap')}</span></div>`+fns.map((f,i)=>`<div class="it ${i===c.fi?'on':''}"><span>${tt(f.n)}</span><b>${fmt(f)}</b></div>`).join('');
+}
+function globalVal(a){ const pc=S.pc; return a==='volume'?(pc.muted?'🔇':Math.round(pc.vol)):a==='brightness'?pc.bright+'%':a==='navApps'?WINS[pc.appIdx]:a==='switchDesk'?pc.desk+'/4':a==='zoom'?Math.round(pc.zoom)+'%':''; }
+let ovlT=null;
+function showOverlay(ctx,on){
+  clearTimeout(ovlT);
+  const o=$('#ovl');
+  if(on){
+    if(!S.crown.opt){ o.classList.remove('show'); return; }
+    if(ctx==='app'){ o.innerHTML=overlayHTML('app'); o.classList.add('show'); }
+    else { layerKind='crown'; renderPC(); }
+    $$('.crown').forEach(c=>{ if(c.dataset.ctx===ctx) c.classList.add('touch'); });
+  } else {
+    ovlT=setTimeout(()=>{ o.classList.remove('show'); if(layerKind==='crown'){layerKind=null;renderPC();} $$('.crown').forEach(c=>c.classList.remove('touch')); },1400);
+  }
+}
+function crownTouch(ctx,on){
+  if(on && (!S.power||S.battery<=0) && ctx==='global') return;
+  showOverlay(ctx,on);
+  if(on && S.crown.opt) mark('touch');
+}
+function crownTap(ctx){
+  const c=S.crown;
+  if(ctx==='global'&&!alive()) return;
+  if(!c.opt){ toast(t('noOverlay')); return; }
+  if(ctx==='app' && c.app!=='desktop'){ c.fi=(c.fi+1)%curFns().length; mark('tap'); renderCrownAll(); showOverlay('app',true); showOverlay('app',false); return; }
+  doPress(S.opt.press);
+  showOverlay(ctx,true); showOverlay(ctx,false);
+}
+function doPress(p){
+  const pc=S.pc;
+  switch(p){
+    case 'actionsRing': showLayer('ring',1800); break;
+    case 'playPause': pc.playing=!pc.playing; toast((pc.playing?'▶ ':'⏸ ')+TRACKS[pc.track]); mark('optpress'); break;
+    case 'appExpose': pc.hideWins=false; pc.expose=true; renderPC(); setTimeout(()=>{pc.expose=false;renderPC();},1800); break;
+    case 'showDesktop': pc.hideWins=!pc.hideWins; break;
+    case 'mute': pc.muted=!pc.muted; showHud(pc.muted?'🔇':'🔊',pc.muted?0:pc.vol,pc.muted?'Mute':Math.round(pc.vol)+''); break;
+    case 'keystroke': layerMsg='⌨ '+t('ksSent',{k:S.opt.ks}); showLayer('msg',1500); toast(t('ksSent',{k:S.opt.ks})); break;
+    case 'smart': layerMsg='✨ '+t('smartRun'); showLayer('msg',1500); toast(t('smartRun')); break;
+  }
+  renderPC(); renderCrownAll();
+}
+function globalTurn(a,raw){
+  const pc=S.pc, rat=S.crown.mode==='ratchet';
+  const cont=(v,step,min,max)=>{ v=clamp(v+raw*step,min,max); return rat?min+Math.round((v-min)/step)*step:+v.toFixed(3); };
+  const disc=()=>{ GACC[a]=(GACC[a]||0)+raw; let s=0; while(Math.abs(GACC[a])>=1){const g=Math.sign(GACC[a]); s+=g; GACC[a]-=g;} return s; };
+  switch(a){
+    case 'volume': pc.muted=false; pc.vol=cont(pc.vol,2,0,100); showHud('🔊',pc.vol,Math.round(pc.vol)+''); if(Math.round(pc.vol)===30 && !S.crown.hold) mark('vol30'); break;
+    case 'brightness': pc.bright=cont(pc.bright,5,10,100); pc.bright=Math.round(pc.bright); showHud('☼',pc.bright,pc.bright+'%'); break;
+    case 'zoom': pc.zoom=cont(pc.zoom,10,50,300); showHud('🔍',(pc.zoom-50)/2.5,Math.round(pc.zoom)+'%'); break;
+    case 'navApps': { const s=disc(); if(s){ pc.appIdx=((pc.appIdx+s)%3+3)%3; showLayer('switcher',1200);} break; }
+    case 'switchDesk': { const s=disc(); if(s){ pc.desk=clamp(pc.desk+s,1,4); showLayer('desk',1000);} break; }
+    case 'keystroke': { const s=disc(); if(s){ toast(t('ksSent',{k:s>0?'Ctrl + ]':'Ctrl + ['})); } break; }
+  }
+  renderPC();
+}
+function crownTurn(ctx,raw,shift){
+  const c=S.crown;
+  if(ctx==='global'&&(!S.power||S.battery<=0)) return;
+  c.rot+=raw*15; $$('.crown .knurl').forEach(k=>k.style.transform=`rotate(${c.rot}deg)`);
+  if(c.mode==='ratchet') tick();
+  const ph=c.hold||shift;
+  if(ph){ globalTurn(c.opt?S.opt.pt:'volume',raw); if(c.opt) mark('pt'); }
+  else if(ctx==='global'||c.app==='desktop'||!c.opt){ globalTurn(c.opt?S.opt.turn:'volume',raw); }
+  else { stepVal(curFns()[c.fi],raw); checkAppMissions(); }
+  renderCrownAll(); if(c.opt){ if(ctx==='app') {$('#ovl').innerHTML=overlayHTML('app');} showOverlay(ctx,true); showOverlay(ctx,false); }
+}
+function stepVal(fn,raw){
+  if(fn.list){ fn.acc=(fn.acc||0)+raw; while(Math.abs(fn.acc)>=1){const s=Math.sign(fn.acc); fn.v=clamp(fn.v+s,0,fn.list.length-1); fn.acc-=s;} return; }
+  let v=clamp(fn.v+raw*fn.step,fn.min,fn.max);
+  if(S.crown.mode==='ratchet') v=fn.min+Math.round((v-fn.min)/fn.step)*fn.step;
+  fn.v=+v.toFixed(4);
+}
+function checkAppMissions(){
+  const near=(a,id,tg)=>{const f=APPS[a].fns.find(x=>x.id===id);return Math.abs(f.v-tg)<f.step/2+1e-9;};
+  if(near('photoshop','size',120)) mark('ps120');
+  if(near('lightroom','exp',1)) mark('lr1');
+  if(near('word','fs',24)) mark('word24');
+  if(Math.round(AV('excel','chart'))===2) mark('pie');
+}
+function bindCrown(el){
+  const ctx=el.dataset.ctx; let drag=null, wacc=0;
+  el.addEventListener('pointerenter',e=>{ if(e.pointerType==='mouse') crownTouch(ctx,true); });
+  el.addEventListener('pointerleave',()=>{ if(!drag) crownTouch(ctx,false); });
+  el.addEventListener('wheel',e=>{ e.preventDefault(); const d=-(e.deltaY||e.deltaX);
+    if(S.crown.mode==='ratchet'){ if(Math.abs(d)>=40){ wacc=0; crownTurn(ctx,Math.sign(d),e.shiftKey); } else { wacc+=d; if(Math.abs(wacc)>=40){ crownTurn(ctx,Math.sign(wacc),e.shiftKey); wacc=0; } } }
+    else crownTurn(ctx,d/80,e.shiftKey); },{passive:false});
+  const ang=(e)=>Math.atan2(e.clientY-drag.cy,e.clientX-drag.cx)*180/Math.PI;
+  el.addEventListener('pointerdown',e=>{ e.preventDefault(); e.stopPropagation(); try{el.setPointerCapture(e.pointerId);}catch(_){} const r=el.getBoundingClientRect(); drag={cx:r.left+r.width/2,cy:r.top+r.height/2,moved:0,t:Date.now(),acc:0}; drag.a=ang(e); crownTouch(ctx,true); el.focus({preventScroll:true}); });
+  el.addEventListener('pointermove',e=>{ if(!drag) return; const a=ang(e); let d=a-drag.a; if(d>180)d-=360; if(d<-180)d+=360; drag.a=a; drag.moved+=Math.abs(d);
+    if(Math.hypot(e.clientX-drag.cx,e.clientY-drag.cy)<8) return;
+    if(S.crown.mode==='ratchet'){ drag.acc+=d; while(Math.abs(drag.acc)>=18){const s=Math.sign(drag.acc); crownTurn(ctx,s,e.shiftKey); drag.acc-=s*18;} } else if(d) crownTurn(ctx,d/18,e.shiftKey); });
+  const end=e=>{ if(!drag) return; if(drag.moved<8 && Date.now()-drag.t<600) crownTap(ctx); drag=null; if(e.pointerType!=='mouse') crownTouch(ctx,false); };
+  el.addEventListener('pointerup',end); el.addEventListener('pointercancel',()=>{drag=null;});
+  el.addEventListener('keydown',e=>{ if(['ArrowRight','ArrowUp'].includes(e.key)){e.preventDefault();e.stopPropagation();crownTouch(ctx,true);crownTurn(ctx,1,e.shiftKey);} else if(['ArrowLeft','ArrowDown'].includes(e.key)){e.preventDefault();e.stopPropagation();crownTouch(ctx,true);crownTurn(ctx,-1,e.shiftKey);} else if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();crownTap(ctx);} });
+  el.addEventListener('focus',()=>crownTouch(ctx,true)); el.addEventListener('blur',()=>crownTouch(ctx,false));
+}
+function renderAppChips(){ $('#appChips').innerHTML=Object.keys(APPS).map(a=>`<button class="chip ${S.crown.app===a?'on':''}" data-app="${a}"><span class="ai" style="background:${APPS[a].c}">${APPS[a].ab}</span>${tt(APPS[a].n)}</button>`).join(''); }
+function renderPreview(){
+  const a=S.crown.app, box=$('#pvApp');
+  $('#pvTitle').textContent=tt(APPS[a].n);
+  $('#pvMode').textContent=(S.crown.mode==='ratchet'?t('ratchet'):t('friction'))+(S.crown.hold?' · ✊':'');
+  if(a==='desktop'||!S.crown.opt){ $('#pvPC').style.display=''; box.style.display='none';
+    $('#readout').innerHTML=[['🔊',Math.round(S.pc.vol)+(S.pc.muted?' (mute)':'')],['☼',S.pc.bright+'%'],['🪟',WINS[S.pc.appIdx]],['🖥️',S.pc.desk+'/4'],['🔍',Math.round(S.pc.zoom)+'%']].map(r=>`<span class="pill">${r[0]} ${r[1]}</span>`).join('');
+    if(a!=='desktop'&&!S.crown.opt) $('#readout').innerHTML+=`<span class="pill" style="color:var(--acc2)">${t('noOverlay')}</span>`;
+    return; }
+  $('#pvPC').style.display='none'; box.style.display='';
+  const v=id=>AV(a,id), ap=APPS[a];
+  let body='', bg='#2b2b2b';
+  if(a==='photoshop'){ const s=v('size'),h=v('hard'),o=v('opac'); const px=Math.min(8+s*.42,230); bg='#535353';
+    body=`<div class="checker" style="position:absolute;inset:14px 60px;border-radius:2px;display:grid;place-items:center"><div style="width:${px}px;height:${px}px;border-radius:50%;background:radial-gradient(circle,rgba(30,120,255,${o/100}) ${h*.7}%,rgba(30,120,255,0) 72%)"></div><div style="position:absolute;width:${px}px;height:${px}px;border-radius:50%;border:1px dashed #000"></div></div>`; }
+  else if(a==='lightroom'){ const e=v('exp'),c=v('con'),tp=v('temp'),sa=v('sat'); const warm=(tp-5500)/6500; bg='#1d1d1d';
+    body=`<div style="position:absolute;inset:12px 50px;border-radius:4px;overflow:hidden;filter:brightness(${Math.pow(2,e*.6).toFixed(3)}) contrast(${(100+c)/100}) saturate(${(100+sa)/100})"><div style="position:absolute;inset:0;background:linear-gradient(180deg,#7fb3e8 0%,#f3c98b 45%,#e48c5a 55%,#3a5a40 56%,#2c4a33 100%)"></div><div style="position:absolute;left:10%;bottom:44%;width:24%;height:22%;background:#56677a;clip-path:polygon(50% 0,100% 100%,0 100%)"></div><div style="position:absolute;left:28%;bottom:44%;width:34%;height:30%;background:#465566;clip-path:polygon(50% 0,100% 100%,0 100%)"></div><div style="position:absolute;right:16%;top:18%;width:12%;aspect-ratio:1;border-radius:50%;background:#ffe9a8"></div><div style="position:absolute;inset:0;background:${warm>=0?'rgba(255,150,40,'+(warm*.45).toFixed(2)+')':'rgba(60,140,255,'+(-warm*1.2*.45).toFixed(2)+')'}"></div></div>`; }
+  else if(a==='illustrator'){ const s=v('stroke'),r=v('rot'),o=v('opac'); bg='#f0f0f0';
+    body=`<svg viewBox="0 0 200 120" style="position:absolute;inset:0;width:100%;height:100%"><g transform="rotate(${r} 100 60)" opacity="${o/100}"><polygon points="100,18 112,48 144,48 118,67 128,98 100,80 72,98 82,67 56,48 88,48" fill="#ffb347" stroke="#1d1d1d" stroke-width="${s*.6}" stroke-linejoin="round"/></g></svg>`; }
+  else if(a==='premiere'){ const f=v('scrub'),z=v('tzoom'); const pos=f/300; const tc=s=>{const fr=Math.round(s);return '00:00:'+String(Math.floor(fr/30)).padStart(2,'0')+':'+String(fr%30).padStart(2,'0');}; bg='#1e1e1e';
+    const sc=z/4; body=`<div style="position:absolute;left:10px;right:10px;top:10px;height:46%;background:#000;border-radius:4px;display:grid;place-items:center;color:#9cf;font-family:monospace;font-size:16px">${tc(f)}</div>
+    <div style="position:absolute;left:10px;right:10px;bottom:10px;height:40%;background:#2a2a2a;border-radius:4px;overflow:hidden"><div style="position:absolute;inset:0;transform:scaleX(${sc});transform-origin:${pos*100}% 50%">
+    <div style="position:absolute;left:2%;width:30%;top:16%;height:26%;background:#6a8cff;border-radius:3px"></div><div style="position:absolute;left:34%;width:40%;top:16%;height:26%;background:#a77bff;border-radius:3px"></div><div style="position:absolute;left:76%;width:22%;top:16%;height:26%;background:#6a8cff;border-radius:3px"></div>
+    <div style="position:absolute;left:2%;width:70%;top:56%;height:26%;background:#2fb37b;border-radius:3px"></div></div>
+    <div style="position:absolute;left:${pos*100}%;top:0;bottom:0;width:2px;background:#4fd1c5"></div></div>`; }
+  else if(a==='indesign'){ const fs=v('fs'),ld=v('lead'),tr=v('track'); bg='#e8e8e8';
+    body=`<div style="position:absolute;inset:12px 40px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);padding:12px;overflow:hidden"><div style="font-family:Georgia,serif;color:#111;font-size:${fs*.75}px;line-height:${ld*.75}px;letter-spacing:${tr/1000}em">Craft<br>Creative<br>Flow</div></div>`; }
+  else if(a==='word'){ const fs=v('fs'),zm=v('zoom'); bg='#e9eef6';
+    body=`<div style="position:absolute;inset:12px 40px;overflow:hidden"><div style="background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);padding:14px;transform:scale(${zm/100});transform-origin:top center;color:#111;font-size:${fs*1.1}px;line-height:1.35">Hola, ${S.lang==='ko'?'다인에듀!':S.lang==='es'?'¿qué tal?':'Dain Edu!'}<br><span style="font-size:.7em;color:#555">Logitech Craft · Crown</span></div></div>`; }
+  else if(a==='excel'){ const cw=v('colw'),ct=Math.round(v('chart')),zm=v('zoom'); bg='#fff'; const data=[3,6,4,8];
+    const cols=['A','B','C','D'];
+    const tbl=`<table style="border-collapse:collapse;font-size:11px;color:#222;transform:scale(${zm/100});transform-origin:top left"><tr><td style="background:#eee;width:20px"></td>${cols.map(c=>`<td style="background:#eee;border:1px solid #ccc;text-align:center;width:${c==='B'?cw*6:40}px">${c}</td>`).join('')}</tr>${data.map((d,i)=>`<tr><td style="background:#eee;border:1px solid #ccc;text-align:center">${i+1}</td><td style="border:1px solid #ddd">Q${i+1}</td><td style="border:1px solid #ddd;text-align:right">${d*10}</td><td style="border:1px solid #ddd"></td><td style="border:1px solid #ddd"></td></tr>`).join('')}</table>`;
+    let ch='';
+    if(ct===0) ch=data.map((d,i)=>`<rect x="${10+i*22}" y="${80-d*8}" width="16" height="${d*8}" fill="#33c481"/>`).join('');
+    else if(ct===1) ch=`<polyline points="${data.map((d,i)=>`${18+i*22},${80-d*8}`).join(' ')}" fill="none" stroke="#33c481" stroke-width="3"/>`;
+    else if(ct===2){ let s=0; const tot=data.reduce((a,b)=>a+b); const cl=['#33c481','#1e7145','#7fd6a8','#0e4d2c']; ch=data.map((d,i)=>{const a0=s/tot*Math.PI*2; s+=d; const a1=s/tot*Math.PI*2; const p=(a)=>`${50+34*Math.sin(a)},${45-34*Math.cos(a)}`; return `<path d="M50,45 L${p(a0)} A34,34 0 ${a1-a0>Math.PI?1:0},1 ${p(a1)} Z" fill="${cl[i]}"/>`;}).join(''); }
+    else ch=`<polygon points="18,80 ${data.map((d,i)=>`${18+i*22},${80-d*8}`).join(' ')} 84,80" fill="#33c48199" stroke="#33c481" stroke-width="2"/>`;
+    body=`<div style="position:absolute;left:8px;top:8px;right:45%;bottom:8px;overflow:hidden">${tbl}</div><svg viewBox="0 0 100 90" style="position:absolute;right:8px;top:8px;width:42%;height:85%;background:#f7f7f7;border:1px solid #ddd">${ch}</svg>`; }
+  else if(a==='powerpoint'){ const s=v('size'),r=v('rot'); bg='#d24726';
+    body=`<div style="position:absolute;inset:12px 50px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);display:grid;place-items:center;overflow:hidden"><div style="width:${s*.7}px;height:${s*.45}px;background:#ed6c47;border-radius:8px;transform:rotate(${r}deg);display:grid;place-items:center;color:#fff;font-weight:700;font-size:${8+s*.06}px">Craft</div></div>`; }
+  else if(a==='spotify'){ const vo=v('vol'),sk=v('seek'); bg='#121212';
+    body=`<div style="position:absolute;inset:14px 30px;display:flex;gap:16px;align-items:center;color:#fff"><div style="width:30%;aspect-ratio:1;background:linear-gradient(135deg,#1ed760,#0a6);border-radius:6px"></div><div style="flex:1"><div style="font-weight:700;font-size:16px">${TRACKS[S.pc.track]}</div><div style="color:#aaa;font-size:12px;margin-bottom:12px">Dain Edu Mix</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#aaa">${fmt(APPS.spotify.fns[1])}<div style="flex:1;height:4px;background:#444;border-radius:4px"><div style="width:${sk/210*100}%;height:100%;background:#1ed760;border-radius:4px"></div></div>3:30</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#aaa;margin-top:10px">🔊<div style="width:50%;height:4px;background:#444;border-radius:4px"><div style="width:${vo}%;height:100%;background:#fff;border-radius:4px"></div></div>${Math.round(vo)}</div></div></div>`; }
+  box.innerHTML=`<div class="appwin" style="background:${bg}"><div class="appbar"><span class="ai" style="background:${ap.c}">${ap.ab}</span>${tt(ap.n)}</div><div class="appbody">${body}</div></div>`;
+  $('#readout').innerHTML=curFns().map((f,i)=>`<span class="pill ${i===S.crown.fi?'on':''}">${tt(f.n)}: ${fmt(f)}</span>`).join('');
+}
+function renderCrownAll(){
+  renderAppChips(); renderPreview();
+  $('#mRatchet').classList.toggle('on',S.crown.mode==='ratchet'); $('#mFriction').classList.toggle('on',S.crown.mode==='friction');
+  $('#tOpt').classList.toggle('on',S.crown.opt); $('#tSound').classList.toggle('on',S.sound);
+  if($('#ovl').classList.contains('show')) $('#ovl').innerHTML=overlayHTML('app');
+  updateHoldBtn();
+}
+function updateHoldBtn(){ const b=$('#cHold'); if(b){ b.textContent=S.crown.hold?t('holdBtnOn'):t('holdBtn'); b.classList.toggle('on',S.crown.hold);} }
+
+/* =========================================================
+   Keys side panel / Options
+   ========================================================= */
+function renderKeysSide(){
+  $('#chanList').innerHTML=[1,2,3].map(n=>{const d=S.chans[n].dev; return `<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)"><span><b>${n}</b> · ${d?tt(DEVICES[d].n)+' <span class="muted">('+DEVICES[d].via+')</span>':'<span class="muted">'+t('notPaired')+'</span>'}</span>${S.ch===n?`<span class="pill" style="color:var(--acc)">${t('active')}</span>`:''}</div>`;}).join('');
+  const rows=[['Fn + Esc',{ko:'스마트 키 ↔ 표준 F1–F12 전환',en:'Smart keys ↔ standard F1–F12',es:'Teclas inteligentes ↔ F1–F12'}],['Fn + O (3초)',{ko:'Mac 레이아웃',en:'Mac layout',es:'Distribución Mac'}],['Fn + P (3초)',{ko:'Windows 레이아웃',en:'Windows layout',es:'Distribución Windows'}],['Fn + B',{ko:'Pause / Break',en:'Pause / Break',es:'Pausa / Inter'}],['Fn + F1…F12',{ko:'현재 모드의 반대 기능',en:'The other function of the key',es:'La otra función de la tecla'}]];
+  $('#fnList').innerHTML=rows.map(r=>`<div style="padding:4px 0"><span class="kcap" style="font-size:12px;padding:1px 8px">${r[0].replace('3초',S.lang==='ko'?'3초':'3 s')}</span> ${tt(r[1])}</div>`).join('')+`<div class="note">${S.fnStd?t('fnStdOn'):t('fnStdOff')}</div>`;
+}
+let fSel='F12';
+function renderOptions(){
+  const opt=(o,list,cur)=>Object.keys(o).filter(k=>!list||list.includes(k)).map(k=>`<option value="${k}" ${k===cur?'selected':''}>${tt(o[k])}</option>`).join('');
+  $('#selPress').innerHTML=opt(PRESS,null,S.opt.press); $('#selTurn').innerHTML=opt(TURN,null,S.opt.turn); $('#selPT').innerHTML=opt(TURN,PT_LIST,S.opt.pt);
+  $('#ksWrap').style.display=S.opt.press==='keystroke'?'':'none'; $('#inKs').value=S.opt.ks;
+  $('#fgrid').innerHTML=Array.from({length:12},(_,i)=>'F'+(i+1)).map(f=>`<button class="fbtn ${f===fSel?'sel':''}" data-f="${f}"><span class="ic">${ACTS[fAct(f)].i}</span>${f}</button>`).join('');
+  $('#fpick').innerHTML=`<div style="font-size:13px;margin-top:10px;color:#4a5566"><b>${fSel}</b> → ${tt(ACTS[fAct(fSel)].n)} ${S.fmap[fSel]?`<button class="btn sm" style="background:#eef1f5;color:#1d232c;border-color:#d5dbe4;margin-left:6px" data-freset="1">↺</button>`:''}</div><div class="picker">${Object.keys(ACTS).map(a=>`<button data-act="${a}" class="${fAct(fSel)===a?'cur':''}">${ACTS[a].i} ${tt(ACTS[a].n)}</button>`).join('')}</div>`;
+  $('#tFstd').classList.toggle('on',S.fnStd);
+  $('#esTable').innerHTML=`<tr><th>${t('channel')}</th><th>${t('device')}</th><th>${t('status')}</th></tr>`+[1,2,3].map(n=>{const d=S.chans[n].dev; return `<tr><td>${n}</td><td>${d?tt(DEVICES[d].n)+' <small style="color:#7a8597">'+t('connectVia')+' '+DEVICES[d].via+'</small>':'—'}</td><td><span class="dot ${d?(S.ch===n?'ok':''):'blink'}"></span>${d?(S.ch===n?t('active'):'✓'):t('notPaired')}</td></tr>`;}).join('');
+  $('#appList').innerHTML=['photoshop','lightroom','illustrator','premiere','indesign','word','excel','powerpoint'].map(a=>`<span class="pill" style="margin:2px;background:#eef1f5;color:#1d232c;border-color:#d5dbe4">${APPS[a].ab} ${tt(APPS[a].n)}</span>`).join('')+`<div style="font-size:12px;color:#5b6676;margin-top:6px">${S.lang==='ko'?'Office 프로필은 Windows용으로 안내되었어요.':S.lang==='es'?'Los perfiles de Office se indicaron para Windows.':'Office profiles were listed for Windows.'}</div>`;
+}
+
+/* =========================================================
+   Real keyboard
+   ========================================================= */
+const SUBS=['test','drill','type'];
+function renderSubtabs(){ $('#subtabs').innerHTML=SUBS.map(s=>`<button class="btn ${S.sub===s?'pri':''}" data-sub="${s}">${t('sub_'+s)}</button>`).join(''); renderSub(); }
+function renderSub(){ SUBS.forEach(s=>$('#sub-'+s).style.display=S.sub===s?'':'none'); $$('#subtabs button').forEach(b=>b.classList.toggle('pri',b.dataset.sub===S.sub)); setTimeout(sizeKB,20); }
+const MEDIA={AudioVolumeMute:'F11',AudioVolumeDown:'F12',AudioVolumeUp:'VolUp',MediaTrackPrevious:'F8',MediaPlayPause:'F9',MediaTrackNext:'F10',LaunchApp2:'Calc',PrintScreen:'PrtSc',ScrollLock:'ScrLk'};
+function codeToId(e){
+  const c=e.code||'', key=e.key||'';
+  if(MEDIA[c]) return MEDIA[c]; if(MEDIA[key]) return MEDIA[key];
+  const mac=S.os==='mac';
+  const os={MetaLeft:mac?'ALTL':'OSL',AltLeft:mac?'OSL':'ALTL',MetaRight:mac?'ALTR':'OSR',AltRight:mac?'OSR':'ALTR',ContextMenu:'OSR',OSLeft:'OSL',OSRight:'OSR'};
+  if(os[c]) return os[c];
+  if(KBI[c]) return c;
+  return null;
+}
+let liveT={};
+function testerKey(e){
+  const id=codeToId(e);
+  const log=$('#keyLog'); const line=document.createElement('div'); line.textContent=`key: "${e.key}"  code: "${e.code}"${id?'  → '+id:''}`; log.prepend(line); while(log.children.length>14) log.lastChild.remove();
+  if(!id) return;
+  S.stats.tested[id]=1;
+  const el=$(`#kbTest .key[data-id="${id}"]`); if(el){ el.classList.add('tested','live'); clearTimeout(liveT[id]); liveT[id]=setTimeout(()=>el.classList.remove('live'),220); }
+  updateTesterCount();
+  if(Object.keys(S.stats.tested).length>=10) mark('real10');
+}
+function updateTesterCount(){ const n=Object.keys(S.stats.tested).length; if($('#testCount')) $('#testCount').textContent=t('testCount',{n}); }
+/* drill */
+let drillMac=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent), drillIdx=0, drillPool=[];
+function buildPool(){ drillPool=DRILL.filter(d=>!(d.macOnly&&!drillMac)&&!(d.winOnly&&drillMac)); }
+function drillLabel(d){ const mod=drillMac?'⌘':'Ctrl'; const parts=[mod]; if(d.sh) parts.push(drillMac?'⇧':'Shift'); parts.push(d.k); return parts.map(p=>`<span class="kcap">${p}</span>`).join('+'); }
+function renderDrill(){ buildPool(); if(drillIdx>=drillPool.length) drillIdx=0; const d=drillPool[drillIdx]; $('#drillOs').textContent=drillMac?'macOS (⌘)':'Windows (Ctrl)'; $('#drillDesc').textContent=tt(d.d); $('#drillKey').innerHTML=drillLabel(d); $('#drillScore').textContent=S.stats.drill; $('#drillTries').textContent=S.stats.drillTries; }
+function drillKey(e){
+  if(['Control','Meta','Shift','Alt'].includes(e.key)) return;
+  const mod=drillMac?e.metaKey:e.ctrlKey; if(!mod) return;
+  e.preventDefault();
+  const d=drillPool[drillIdx]; S.stats.drillTries++;
+  const ok=e.code==='Key'+d.k && !!d.sh===e.shiftKey;
+  const fb=$('#drillFb');
+  if(ok){ S.stats.drill++; fb.innerHTML=`<span class="drillOk">${t('great')}</span>`; if(S.stats.drill>=5) mark('drill5'); drillIdx=(drillIdx+1)%drillPool.length; setTimeout(()=>{renderDrill();fb.innerHTML='';},700); }
+  else fb.innerHTML=`<span class="drillNo">${t('again')}</span>`;
+  $('#drillScore').textContent=S.stats.drill; $('#drillTries').textContent=S.stats.drillTries;
+}
+/* typing */
+let sentIdx=0, typeStart=null, typeDone=false;
+function renderTyping(reset){ const list=SENT[S.lang]; if(reset){sentIdx=sentIdx%list.length; $('#typeIn').value=''; typeStart=null; typeDone=false;} paintTyping(); }
+function paintTyping(){
+  const tg=SENT[S.lang][sentIdx], v=$('#typeIn').value;
+  $('#typeTgt').innerHTML=[...tg].map((c,i)=>{ let cl=''; if(i<v.length) cl=v[i]===c?'ok':'no'; else if(i===v.length) cl='cur'; return `<span class="${cl}">${c===' '?'&nbsp;':c.replace(/</g,'&lt;')}</span>`; }).join('');
+  let right=0; for(let i=0;i<Math.min(v.length,tg.length);i++) if(v[i]===tg[i]) right++;
+  const acc=v.length?Math.round(right/Math.max(v.length,1)*100):100;
+  const mins=typeStart?(Date.now()-typeStart)/60000:0; const sp=mins>0?Math.round(v.length/mins):0;
+  $('#tAcc').textContent=acc+'%'; $('#tSpeed').textContent=sp; $('#tDone').textContent=S.stats.typed;
+  if(!typeDone && v.length>=tg.length){ typeDone=true; const fin=Math.round(right/tg.length*100); S.stats.typed++; $('#tDone').textContent=S.stats.typed; toast(`✅ ${t('acc')} ${fin}% · ${t('speed')} ${sp}`); if(fin>=90) mark('type1'); }
+}
+
+/* =========================================================
+   Missions / quiz / help
+   ========================================================= */
+function mark(id){ if(S.done[id]) return; S.done[id]=1; save(); const m=MIS.find(x=>x.id===id); if(m) toast(t('missionDone')+': '+tt(m.n),true); renderMissions(); updateProgress(); if(MIS.every(x=>S.done[x.id])){ setTimeout(()=>{toast(t('allDone'),true);confetti();},1200);} }
+function updateProgress(){ const n=MIS.filter(m=>S.done[m.id]).length; $('#progBar').style.width=(n/MIS.length*100)+'%'; $('#progTxt').textContent=`🏁 ${n}/${MIS.length}`; }
+function renderMissions(){ $('#misGrid').innerHTML=MIS.map((m,i)=>`<div class="card mcard ${S.done[m.id]?'done':''}"><div class="mi">${S.done[m.id]?'✓':i+1}</div><div><b>${tt(m.n)}</b><p>${tt(m.h)}</p><button class="btn sm" data-mis="${m.id}">${t('go')}</button></div></div>`).join(''); }
+function confetti(){ for(let i=0;i<40;i++){ const s=document.createElement('div'); s.className='conf'; s.textContent=['🎉','✨','🎛️','⌨️','⭐'][i%5]; s.style.left=Math.random()*100+'vw'; s.style.animationDelay=Math.random()*.8+'s'; document.body.appendChild(s); setTimeout(()=>s.remove(),3500);} }
+function renderQuiz(){
+  $('#quizBox').innerHTML=QUIZ.map((q,i)=>{ const ans=S.quiz[i]; return `<div class="card qitem"><b>${i+1}. ${tt(q.q)}</b><div class="qopts">${q.o.map((o,j)=>{ let cl=''; if(ans!==undefined){ if(j===q.a) cl='right'; else if(j===ans) cl='wrong'; } return `<button data-q="${i}" data-o="${j}" class="${cl}" ${ans!==undefined?'disabled':''}>${tt(o)}</button>`; }).join('')}</div><div class="qexp ${ans!==undefined?'show':''}">💡 ${tt(q.e)}</div></div>`; }).join('');
+  const s=Object.keys(S.quiz).filter(i=>S.quiz[i]===QUIZ[i].a).length; $('#quizScore').textContent=t('quizScore',{s,t:QUIZ.length});
+}
+function renderHelp(){
+  $('#faq').innerHTML=FAQ.map(f=>`<details><summary>${tt(f.q)}</summary><p>${tt(f.a)}</p></details>`).join('');
+  $('#prompts').innerHTML=PROMPTS.map((p,i)=>`<div class="prompt"><span>${tt(p)}</span><button class="btn sm" data-copy="${i}">${t('copy')}</button></div>`).join('');
+}
+
+/* =========================================================
+   Events
+   ========================================================= */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button,[data-part]'); if(!b) return;
+  if(b.dataset.sec) goSec(b.dataset.sec);
+  else if(b.dataset.lang){ S.lang=b.dataset.lang; save(); applyI18n(); }
+  else if(b.dataset.go){ goSec(b.dataset.go,{app:b.dataset.app}); }
+  else if(b.dataset.part!==undefined && b.classList.contains('part')) highlightPart(+b.dataset.part);
+  else if(b.dataset.app && b.classList.contains('chip')){ S.crown.app=b.dataset.app; S.crown.fi=0; renderCrownAll(); }
+  else if(b.dataset.pair) completePair(b.dataset.pair);
+  else if(b.dataset.f){ fSel=b.dataset.f; renderOptions(); }
+  else if(b.dataset.act){ if(b.dataset.act===FDEF[fSel]) delete S.fmap[fSel]; else S.fmap[fSel]=b.dataset.act; save(); renderOptions(); refreshKeys(); toast(fSel+' → '+tt(ACTS[b.dataset.act].n)); }
+  else if(b.dataset.freset){ delete S.fmap[fSel]; save(); renderOptions(); refreshKeys(); }
+  else if(b.dataset.sub){ S.sub=b.dataset.sub; renderSub(); }
+  else if(b.dataset.mis){ const m=MIS.find(x=>x.id===b.dataset.mis); goSec(m.s,{app:m.app,sub:m.sub}); }
+  else if(b.dataset.q!==undefined){ const i=+b.dataset.q; S.quiz[i]=+b.dataset.o; renderQuiz(); if(Object.keys(S.quiz).length===QUIZ.length){ const s=Object.keys(S.quiz).filter(k=>S.quiz[k]===QUIZ[k].a).length; if(s/QUIZ.length>=.8) mark('quiz'); } }
+  else if(b.dataset.copy!==undefined){ const txt=tt(PROMPTS[+b.dataset.copy]); try{navigator.clipboard.writeText(txt).then(()=>toast(t('copied')),()=>toast(t('copied')));}catch(_){ } }
+});
+$('#cLeft').onclick=()=>{crownTouch('app',true);crownTurn('app',-1,false);crownTouch('app',false);};
+$('#cRight').onclick=()=>{crownTouch('app',true);crownTurn('app',1,false);crownTouch('app',false);};
+$('#cTap').onclick=()=>crownTap('app');
+$('#cHold').onclick=()=>{S.crown.hold=!S.crown.hold; renderCrownAll();};
+$('#mRatchet').onclick=()=>{ if(S.crown.mode!=='ratchet'){S.crown.mode='ratchet'; mark('mode'); tick();} renderCrownAll(); };
+$('#mFriction').onclick=()=>{ if(S.crown.mode!=='friction'){S.crown.mode='friction'; mark('mode');} renderCrownAll(); };
+$('#tOpt').onclick=()=>{S.crown.opt=!S.crown.opt; renderCrownAll(); if(!S.crown.opt) toast(t('noOverlay'));};
+$('#tSound').onclick=()=>{S.sound=!S.sound; save(); renderCrownAll();};
+$('#tPower').onclick=e=>{S.power=!S.power; e.currentTarget.classList.toggle('on',S.power); updateKBState(); renderPC();};
+$('#tUsb').onclick=e=>{S.charging=!S.charging; e.currentTarget.classList.toggle('on',S.charging); toast(S.charging?'⚡ '+t('charging'):'🔌'); updateKBState();};
+$('#tAutoBl').onclick=e=>{S.autoBl=!S.autoBl; e.currentTarget.classList.toggle('on',S.autoBl); updateKBState();};
+$('#rBatt').oninput=e=>{S.battery=+e.target.value; updateKBState(); renderPC();};
+$('#rAmb').oninput=e=>{S.ambient=+e.target.value; setHand(true); setHand(false); updateKBState();};
+$('#selPress').onchange=e=>{S.opt.press=e.target.value; save(); renderOptions(); renderCrownAll();};
+$('#selTurn').onchange=e=>{S.opt.turn=e.target.value; save(); renderCrownAll();};
+$('#selPT').onchange=e=>{S.opt.pt=e.target.value; save(); renderCrownAll();};
+$('#inKs').oninput=e=>{S.opt.ks=e.target.value||'Ctrl + Z'; save();};
+$('#tFstd').onclick=()=>setFnStd(!S.fnStd);
+$('#testReset').onclick=()=>{S.stats.tested={}; refreshKeys($('#kbTest .kb')); updateTesterCount(); $('#keyLog').innerHTML='';};
+$('#drillOsBtn').onclick=()=>{drillMac=!drillMac; drillIdx=0; renderDrill();};
+$('#drillSkip').onclick=()=>{drillIdx=(drillIdx+1)%drillPool.length; renderDrill(); $('#drillFb').innerHTML='';};
+$('#typeIn').addEventListener('input',()=>{ if(!typeStart) typeStart=Date.now(); paintTyping(); });
+$('#typeNext').onclick=()=>{ sentIdx=(sentIdx+1)%SENT[S.lang].length; renderTyping(true); $('#typeIn').focus(); };
+$('#misReset').onclick=()=>{ S.done={}; S.quiz={}; save(); renderMissions(); renderQuiz(); updateProgress(); };
+$('#quizRetry').onclick=()=>{ S.quiz={}; renderQuiz(); };
+document.addEventListener('keydown',e=>{
+  if(S.sec!=='real') return;
+  const tag=(e.target.tagName||'').toLowerCase(); if(tag==='textarea'||tag==='input'||tag==='select') return;
+  if(S.sub==='test'){ if(!(e.ctrlKey||e.metaKey)||e.key.length>1) e.preventDefault(); testerKey(e); }
+  else if(S.sub==='drill') drillKey(e);
+});
+setInterval(()=>{ if(S.charging && S.battery<100){ S.battery=Math.min(100,S.battery+1); $('#rBatt').value=S.battery; updateKBState(); } },400);
+setInterval(()=>{ $$('.pc .clk').forEach(c=>c.textContent=new Date().toTimeString().slice(0,5)); },15000);
+
+/* =========================================================
+   Init
+   ========================================================= */
+load();
+$('#pvPC').innerHTML=pcHTML(); $('#pvPC2').innerHTML=pcHTML();
+renderKB($('#kbSim'),'sim'); renderKB($('#kbTest'),'test');
+bindCrown($('#bigCrown'));
+$('#rBatt').value=S.battery; $('#rAmb').value=S.ambient;
+const h=(location.hash||'').slice(1); if(SECS.includes(h)) S.sec=h;
+applyI18n(); goSec(S.sec);
+sizeKB();
+</script>
+</body>
+</html>
